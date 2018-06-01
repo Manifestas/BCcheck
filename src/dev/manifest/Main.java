@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +29,7 @@ public class Main {
 
         // Don't forget to disable the parent handlers.
         logger.setUseParentHandlers(false);
+
         PipedOutputStream outputStream = new PipedOutputStream();
         GlobalScreen.addNativeKeyListener(new GlobalKeyListener(outputStream));
 
@@ -39,6 +41,8 @@ public class Main {
         }
         Observable<byte[]> byteObservable = StringObservable.from(input);
         Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
-        stringObservable.subscribe(System.out::println);
+        stringObservable
+                .debounce(80, TimeUnit.MILLISECONDS)
+                .subscribe(System.out::println);
     }
 }
