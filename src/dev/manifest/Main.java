@@ -43,6 +43,8 @@ public class Main {
         Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
         stringObservable
                 .debounce(80, TimeUnit.MILLISECONDS)
+                .filter(s -> s.length() >= 12)
+                .filter(s -> s.matches("([0-9]{12}+)Enter")) // 000004622369Enter
                 .subscribe(System.out::println);
     }
 }
