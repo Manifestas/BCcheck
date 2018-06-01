@@ -35,7 +35,7 @@ public class GlobalKeyListener implements NativeKeyListener {
         }
         String keyString = NativeKeyEvent.getKeyText(keyEvent.getKeyCode());
         try {
-            outputStream.write(keyString.getBytes(Charset.forName("UTF-8")));
+            outputStream.write(keyString.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

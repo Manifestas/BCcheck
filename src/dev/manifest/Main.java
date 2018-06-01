@@ -2,12 +2,13 @@ package dev.manifest;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import rx.Observable;
 import rx.observables.StringObservable;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        InputStreamReader reader = new InputStreamReader(input);
-        StringObservable.from(reader).subscribe(System.out::println);
+        Observable<byte[]> byteObservable = StringObservable.from(input);
+        Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
+        stringObservable.subscribe(System.out::println);
     }
 }
