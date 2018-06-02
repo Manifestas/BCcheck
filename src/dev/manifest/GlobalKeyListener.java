@@ -7,7 +7,6 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 
 public class GlobalKeyListener implements NativeKeyListener {
 
