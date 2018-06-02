@@ -5,6 +5,8 @@ import org.jnativehook.NativeHookException;
 import rx.Observable;
 import rx.observables.StringObservable;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -39,6 +41,15 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        EventQueue.invokeLater(() -> {
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            mainFrame.setVisible(true);
+        });
+
+
         Observable<byte[]> byteObservable = StringObservable.from(input);
         Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
         stringObservable
