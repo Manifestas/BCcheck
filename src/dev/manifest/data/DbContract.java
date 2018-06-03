@@ -311,4 +311,72 @@ public final class DbContract {
          */
         public static final String COLUMN_SIZE_NAME = "SizeName";
     }
+
+    /**
+     * Inner class that defines constant values for the Objects database table.
+     */
+    public static final class ObjectEntry {
+
+        /**
+         * Name of database table for Sizes.
+         */
+        public static final String TABLE_NAME = "T_Objects";
+
+        /**
+         * ID of object(e.g. 24033 (Unimoll)).
+         *
+         * Type: INT
+         */
+        public static final String COLUMN_OBJECT_ID = "ID";
+
+        /**
+         * Another object ID(e.g. 24033 (Unimoll)).
+         */
+        public static final String COLUMN_OBJECT = "Object";
+
+        /**
+         * Short name of object(e.g. Юнимол)
+         *
+         * Type: VARSHAR
+         */
+        public static final String COLUMN_OBJECT_SHORT_DESC = "ShortDesc";
+
+        /**
+         * Determines whether to interrogate or not the given store at a conclusion of the rests of the goods.
+         * If it equals 2 - then the remainders are queried.
+         */
+        public static final String COLUMN_KEEP_CHECKS = "KeepChecks";
+    }
+
+    /**
+     * Inner class that defines constant values for the quantity database table.
+     */
+    public static final class LogPluCostEntry {
+
+        /**
+         * Name of database table for Sizes.
+         */
+        public static final String TABLE_NAME = "T_LocPLUCost";
+
+        /**
+         * Internal code of the article (unique for sizes).
+         *
+         * Type: INT
+         */
+        public static final String COLUMN_ID_PLU = "ID_PLU";
+
+        /**
+         * ID of object(e.g. 24033 (Unimoll)).
+         *
+         * Type: INT
+         */
+        public static final String COLUMN_OBJECT_ID = "ID";
+
+        /**
+         * Quantity of each unique ID of goods
+         *
+         * Type: FLOAT
+         */
+        public static final String COLUMN_QUANTITY = "StockQty";
+    }
 }
