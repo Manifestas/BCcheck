@@ -8,20 +8,21 @@ public final class DbContract {
     /**
      * Database name.
      */
-    public static final String DB_NAME = "TradeX";
+    private static final String DB_NAME = "TradeX";
 
     //TODO: move this to the SharedPreference and ask a user to enter log/pass in settings menu
     /**
      * User login.
      */
-    public static final String DB_LOGIN = "tv";
+    private static final String DB_LOGIN = "tv";
 
     /**
      * User password.
      */
-    public static final String DB_PASSWORD = "12345678";
+    private static final String DB_PASSWORD = "12345678";
 
-    public static final String DB_IP_ADDRESS = "192.168.14.2:1433";
+    private static final String DB_IP_ADDRESS = "192.168.14.2:1433";
+    private static final int UNIMOLL_ID = 119;
 
     /**
      * Connection url.
@@ -33,31 +34,31 @@ public final class DbContract {
                                              + ";password=" + DB_PASSWORD + ";";
 
     /** SQL statement. */
-    public static final String INNER_JOIN = " INNER JOIN ";
+    private static final String INNER_JOIN = " INNER JOIN ";
     /** SQL keyword. */
-    public static final String ON = " ON ";
+    private static final String ON = " ON ";
     /** A dot for sql command. */
-    public static final String DOT = ".";
+    private static final String DOT = ".";
     /** A comma separator. */
-    public static final String COMMA = ", ";
+    private static final String COMMA = ", ";
     /** A equal symbol. */
-    public static final String EQUALS = " = ";
+    private static final String EQUALS = " = ";
 
-    /** Query from TradeX table for getting Goods parameters.
-     * Currency price, model name, model desc, size name,
-     * color name, season name, current exchange rate.
+    /**
+     * Query from TradeX table for getting Goods quantity.
      */
-    public static String  goodsQuery(String barcode) {
-        return "SELECT "
-                + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_CURRENT_PRICE + COMMA
+    public static String queryQty(String barcode) {
+        return "SELECT * FROM "
+                + "(SELECT "
+                + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE + COMMA
                 + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_MODEL + COMMA
-                + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_MODEL_DESC + COMMA
                 + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_NAME + COMMA
                 + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR + COMMA
-                + SeasonEntry.TABLE_NAME + DOT + SeasonEntry.COLUMN_SEASON + COMMA
-                + ExchangeEntry.TABLE_NAME + DOT + ExchangeEntry.COLUMN_EXCHANGE_RATE
-            + " FROM " + BarcodeEntry.TABLE_NAME
-                + INNER_JOIN  + PluEntry.TABLE_NAME
+                + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.TABLE_NAME + COMMA
+                + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_SHORT_DESC + COMMA
+                + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_QUANTITY
+                + " FROM " + PluEntry.TABLE_NAME
+                + INNER_JOIN + BarcodeEntry.TABLE_NAME
                 + ON + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_ID_PLU
                 + EQUALS + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID
                 + INNER_JOIN + ModelEntry.TABLE_NAME
@@ -69,14 +70,23 @@ public final class DbContract {
                 + INNER_JOIN + ColorEntry.TABLE_NAME
                 + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_COLOR
                 + EQUALS + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR_ID
-                + INNER_JOIN + SeasonEntry.TABLE_NAME
-                + ON + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_SEASON_ID
-                + EQUALS + SeasonEntry.TABLE_NAME + DOT + SeasonEntry.COLUMN_SEASON_ID
-                + INNER_JOIN + ExchangeEntry.TABLE_NAME
-                + ON + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_CURRENCY_ID
-                + EQUALS + ExchangeEntry.TABLE_NAME + DOT + ExchangeEntry.COLUMN_CURRENCY_ID
-            + " WHERE " + BarcodeEntry.TABLE_NAME + DOT +  BarcodeEntry.COLUMN_BARCODE
-                + EQUALS + "'" + BarcodeEntry.getValidBarcode(barcode) + "';";
+                + INNER_JOIN + LogPluCostEntry.TABLE_NAME
+                + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID
+                + EQUALS + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_ID_PLU
+                + INNER_JOIN + ObjectEntry.TABLE_NAME
+                + ON + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_OBJECT_ID
+                + EQUALS + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_ID
+                + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_MODEL + EQUALS
+                + " (SELECT " + PluEntry.COLUMN_ID_MODEL
+                + " FROM " + PluEntry.TABLE_NAME
+                + " WHERE " + PluEntry.COLUMN_ID + EQUALS
+                + " (SELECT " + BarcodeEntry.COLUMN_ID_PLU
+                + " FROM " + BarcodeEntry.TABLE_NAME
+                + " WHERE " + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.TABLE_NAME
+                + EQUALS + "'" + barcode + "')))"
+                + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + UNIMOLL_ID + ";";
+
+
     }
 
 
@@ -370,7 +380,7 @@ public final class DbContract {
          *
          * Type: INT
          */
-        public static final String COLUMN_OBJECT_ID = "ID";
+        public static final String COLUMN_OBJECT_ID = "ID_Objects";
 
         /**
          * Quantity of each unique ID of goods
