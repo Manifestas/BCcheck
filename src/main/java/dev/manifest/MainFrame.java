@@ -11,10 +11,10 @@ public class MainFrame extends JFrame {
     public MainFrame() {
 
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        initTestArea();
+        initTextArea();
     }
 
-    private void initTestArea() {
+    private void initTextArea() {
         JTextArea logTextArea = new JTextArea();
         logTextArea.setLineWrap(true);
         logTextArea.setWrapStyleWord(true);
