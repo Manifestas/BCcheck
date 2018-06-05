@@ -1,6 +1,7 @@
 package dev.manifest;
 
 import dev.manifest.data.DbHelper;
+import dev.manifest.table.TableModel;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import rx.Observable;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +63,8 @@ public class Main {
                     int index = s.lastIndexOf("Enter");
                     return s.substring(index - 12, index); // 000004622369
                 })
-                .subscribe(DbHelper::addProductToTable);
+                .map(DbHelper::returnProductIfNew)
+                .filter(Objects::nonNull)
+                .subscribe(TableModel.getInstance()::addProduct);
     }
 }
