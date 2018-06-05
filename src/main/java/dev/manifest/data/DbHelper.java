@@ -4,7 +4,8 @@ import dev.manifest.table.Product;
 import dev.manifest.data.DbContract.ModelEntry;
 import dev.manifest.data.DbContract.ColorEntry;
 import dev.manifest.data.DbContract.SizeEntry;
-import dev.manifest.table.TableModel;
+import dev.manifest.data.DbContract.LogPluCostEntry;
+import dev.manifest.data.DbContract.BarcodeEntry;
 
 import java.sql.*;
 
@@ -59,29 +60,35 @@ public class DbHelper {
     }
 
     public static Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
-        Product product = null;
-        if (resultSet != null && resultSet.next()) {
-            String modelName = resultSet.getString(ModelEntry.COLUMN_MODEL);
-            String color = resultSet.getString(ColorEntry.COLUMN_COLOR);
-            String size = resultSet.getString(SizeEntry.COLUMN_SIZE_NAME);
+        String modelName = resultSet.getString(ModelEntry.COLUMN_MODEL);
+        String color = resultSet.getString(ColorEntry.COLUMN_COLOR);
+        String size = resultSet.getString(SizeEntry.COLUMN_SIZE_NAME);
 
-            product = new Product(modelName, color, size);
-        }
-        return product;
+        return new Product(modelName, color, size);
     }
 
-    public static void addProductToTable(String barcode) {
+    public static Product returnProductIfNew(String barcode) {
         Product product = null;
         try {
             if (connection == null) {
                 connection = getConnection();
             }
             ResultSet rs = getResultSet(barcode);
-            product = getProductFromResultSet(rs);
+            if (rs == null) {
+                return null;
+            }
+            while (rs.next()) {
+                if (rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
+                    return null;
+                }
+                if (rs.getString(BarcodeEntry.COLUMN_BARCODE).equals(barcode)) {
+                    product = getProductFromResultSet(rs);
+                }
+            }
         }catch (Exception e) {
             e.printStackTrace();
             dispose();
         }
-        TableModel.getInstance().addProduct(product);
+        return product;
     }
 }
