@@ -4,6 +4,7 @@ import dev.manifest.table.Product;
 import dev.manifest.data.DbContract.ModelEntry;
 import dev.manifest.data.DbContract.ColorEntry;
 import dev.manifest.data.DbContract.SizeEntry;
+import dev.manifest.table.TableModel;
 
 import java.sql.*;
 
@@ -45,5 +46,12 @@ public class DbHelper {
             product = new Product(modelName, color, size);
         }
         return product;
+    }
+
+    public static void addProductToTable(String barcode) throws Exception {
+        getConnection();
+        ResultSet rs = getResultSet(barcode);
+        Product product = getProductFromResulSet(rs);
+        new TableModel().addProduct(product);
     }
 }
