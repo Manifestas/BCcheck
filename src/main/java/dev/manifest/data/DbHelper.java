@@ -82,6 +82,6 @@ public class DbHelper {
             e.printStackTrace();
             dispose();
         }
-        new TableModel().addProduct(product);
+        TableModel.getInstance().addProduct(product);
     }
 }

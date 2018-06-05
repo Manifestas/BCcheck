@@ -6,6 +6,20 @@ import java.util.List;
 
 public class TableModel extends AbstractTableModel {
 
+    private static TableModel instance;
+    private TableModel(){
+
+    }
+
+    public static TableModel getInstance() {
+        if (instance == null) {
+            synchronized (TableModel.class) {
+                instance = new TableModel();
+            }
+        }
+        return instance;
+    }
+
     private static final int COLUMN_COUNT = 4;
     private static final int LAST_COLUMN_VALUE = 1;
 

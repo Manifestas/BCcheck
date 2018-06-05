@@ -4,9 +4,10 @@ import javax.swing.*;
 
 public class TableView extends JTable {
 
+
     public TableView() {
         super();
-        setModel(new TableModel());
+        setModel(TableModel.getInstance());
     }
 
 }
