@@ -2,6 +2,8 @@ package dev.manifest;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
@@ -12,6 +14,12 @@ public class MainFrame extends JFrame {
 
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         initTextArea();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+            }
+        });
     }
 
     private void initTextArea() {
