@@ -27,7 +27,7 @@ public final class DbContract {
     /**
      * Connection url.
      */
-    public static final String DB_CONN_URL = "jdbc:jtds:sqlserver://"
+    public static final String DB_CONN_URL = "jdbc:sqlserver://"
                                              + DB_IP_ADDRESS + ";"
                                              + "databaseName=" + DB_NAME
                                              + ";user=" + DB_LOGIN
