@@ -54,7 +54,7 @@ public final class DbContract {
                 + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_MODEL + COMMA
                 + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_NAME + COMMA
                 + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR + COMMA
-                + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.TABLE_NAME + COMMA
+                + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT + COMMA
                 + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_SHORT_DESC + COMMA
                 + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_QUANTITY
                 + " FROM " + PluEntry.TABLE_NAME
