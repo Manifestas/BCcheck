@@ -13,9 +13,7 @@ public class TableModel extends AbstractTableModel {
 
     public static TableModel getInstance() {
         if (instance == null) {
-            synchronized (TableModel.class) {
-                instance = new TableModel();
-            }
+            instance = new TableModel();
         }
         return instance;
     }
