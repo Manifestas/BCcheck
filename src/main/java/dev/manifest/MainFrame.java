@@ -1,5 +1,6 @@
 package dev.manifest;
 
+import dev.manifest.data.DbHelper;
 import dev.manifest.table.TableView;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class MainFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+                DbHelper.dispose();
             }
         });
     }
