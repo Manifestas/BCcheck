@@ -1,5 +1,7 @@
 package dev.manifest;
 
+import dev.manifest.table.TableView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -14,6 +16,7 @@ public class MainFrame extends JFrame {
 
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         initTextArea();
+        initTable();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -34,5 +37,11 @@ public class MainFrame extends JFrame {
         logScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         getContentPane().add(BorderLayout.SOUTH, logScroll);
+    }
+
+    private void initTable() {
+        TableView table = new TableView();
+        JScrollPane tableScroll = new JScrollPane(table);
+        getContentPane().add(BorderLayout.CENTER, tableScroll);
     }
 }
