@@ -48,10 +48,15 @@ public class DbHelper {
         return product;
     }
 
-    public static void addProductToTable(String barcode) throws Exception {
-        getConnection();
-        ResultSet rs = getResultSet(barcode);
-        Product product = getProductFromResulSet(rs);
+    public static void addProductToTable(String barcode) {
+        Product product = null;
+        try {
+            getConnection();
+            ResultSet rs = getResultSet(barcode);
+            product = getProductFromResulSet(rs);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         new TableModel().addProduct(product);
     }
 }

@@ -1,5 +1,6 @@
 package dev.manifest;
 
+import dev.manifest.data.DbHelper;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import rx.Observable;
@@ -60,6 +61,6 @@ public class Main {
                     int index = s.lastIndexOf("Enter");
                     return s.substring(index - 12, index); // 000004622369
                 })
-                .subscribe(System.out::println);
+                .subscribe(DbHelper::addProductToTable);
     }
 }
