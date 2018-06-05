@@ -73,7 +73,9 @@ public class DbHelper {
     public static void addProductToTable(String barcode) {
         Product product = null;
         try {
-            getConnection();
+            if (connection == null) {
+                connection = getConnection();
+            }
             ResultSet rs = getResultSet(barcode);
             product = getProductFromResultSet(rs);
         }catch (Exception e) {
