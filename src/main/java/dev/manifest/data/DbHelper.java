@@ -26,6 +26,28 @@ public class DbHelper {
         }
     }
 
+    public static void closeStatement() throws SQLException {
+        if (statement != null) {
+            statement.close();
+        }
+    }
+
+    public static void closeResultSet() throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+    }
+
+    public static void dispose() {
+        try {
+            closeResultSet();
+            closeStatement();
+            closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static ResultSet getResultSet(String barcode) throws SQLException{
         if (connection != null) {
             statement = connection.createStatement();
@@ -56,6 +78,7 @@ public class DbHelper {
             product = getProductFromResultSet(rs);
         }catch (Exception e) {
             e.printStackTrace();
+            dispose();
         }
         new TableModel().addProduct(product);
     }
