@@ -36,7 +36,7 @@ public class DbHelper {
         }
     }
 
-    public static Product getProductFromResulSet(ResultSet resultSet) throws SQLException {
+    public static Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
         Product product = null;
         if (resultSet != null && resultSet.next()) {
             String modelName = resultSet.getString(ModelEntry.COLUMN_MODEL);
@@ -53,7 +53,7 @@ public class DbHelper {
         try {
             getConnection();
             ResultSet rs = getResultSet(barcode);
-            product = getProductFromResulSet(rs);
+            product = getProductFromResultSet(rs);
         }catch (Exception e) {
             e.printStackTrace();
         }
