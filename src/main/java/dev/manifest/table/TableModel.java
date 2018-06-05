@@ -33,7 +33,7 @@ public class TableModel extends AbstractTableModel {
             case 3:
                 return LAST_COLUMN_VALUE;
             default:
-                throw new IndexOutOfBoundsException("Column index value must be in 0-3 range.");
+                throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
         }
     }
 }
