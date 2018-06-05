@@ -10,6 +10,7 @@ public class TableModel extends AbstractTableModel {
     private static final int LAST_COLUMN_VALUE = 1;
 
     private List<Product> productList = new ArrayList<>();
+
     @Override
     public int getRowCount() {
         return productList.size();
@@ -35,5 +36,10 @@ public class TableModel extends AbstractTableModel {
             default:
                 throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
         }
+    }
+
+    public void addProduct(Product product) {
+        productList.add(product);
+        fireTableDataChanged();
     }
 }
