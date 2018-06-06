@@ -27,6 +27,13 @@ public class Product {
         return product.name.equals(this.name) && product.color.equals(this.color) && product.size.equals(this.size);
     }
 
+    public boolean articleEquals(Product product) {
+        if (this.equals(product)) {
+            return true;
+        }
+        return product.name.equals(this.name) && product.color.equals(this.color);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, color, size);
