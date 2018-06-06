@@ -65,6 +65,7 @@ public class Main {
                 })
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
+                .filter(p -> !TableModel.getInstance().containsArticle(p))
                 .subscribe(TableModel.getInstance()::addProduct);
     }
 }
