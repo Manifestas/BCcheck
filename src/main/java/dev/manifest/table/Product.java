@@ -1,5 +1,7 @@
 package dev.manifest.table;
 
+import java.util.Objects;
+
 public class Product {
 
     private String name;
@@ -23,6 +25,11 @@ public class Product {
         }
         Product product = (Product) obj;
         return product.name.equals(this.name) && product.color.equals(this.color) && product.size.equals(this.size);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, color, size);
     }
 
     public String getName() {
