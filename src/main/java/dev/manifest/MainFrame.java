@@ -1,7 +1,7 @@
 package dev.manifest;
 
 import dev.manifest.data.DbHelper;
-import dev.manifest.table.TableView;
+import dev.manifest.table.Table;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initTable() {
-        TableView table = new TableView();
+        Table table = new Table();
         JScrollPane tableScroll = new JScrollPane(table);
         getContentPane().add(BorderLayout.CENTER, tableScroll);
     }
