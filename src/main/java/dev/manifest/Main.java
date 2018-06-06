@@ -6,6 +6,8 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import rx.Observable;
 import rx.observables.StringObservable;
+import rx.schedulers.Schedulers;
+import rx.schedulers.SwingScheduler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +50,7 @@ public class Main {
 
         EventQueue.invokeLater(() -> {
             MainFrame mainFrame = new MainFrame();
-            mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             mainFrame.setVisible(true);
         });
 
@@ -66,6 +68,8 @@ public class Main {
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
                 .filter(p -> !TableModel.getInstance().containsArticle(p))
+                .subscribeOn(Schedulers.io())
+                .observeOn(SwingScheduler.getInstance())
                 .subscribe(TableModel.getInstance()::addProduct);
     }
 }
