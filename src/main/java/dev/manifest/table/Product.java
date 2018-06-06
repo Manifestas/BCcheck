@@ -28,6 +28,9 @@ public class Product {
     }
 
     public boolean articleEquals(Product product) {
+        if (product == null) {
+            return false;
+        }
         if (this.equals(product)) {
             return true;
         }

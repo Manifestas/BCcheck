@@ -52,6 +52,19 @@ public class TableModel extends AbstractTableModel {
         }
     }
 
+    public boolean containsArticle(Product product) {
+        if (product == null) {
+            return false;
+        }
+        for (Product p : productList) {
+            if (p.articleEquals(product)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     public void addProduct(Product product) {
         MidiPlayer.playNewProduct();
         productList.add(product);
