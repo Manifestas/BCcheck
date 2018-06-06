@@ -26,7 +26,7 @@ public class MidiPlayer {
 
             ShortMessage b = new ShortMessage();
             b.setMessage(128, 1, 50, 100);
-            MidiEvent noteOff = new MidiEvent(b, 12);
+            MidiEvent noteOff = new MidiEvent(b, 6);
             track.add(noteOff);
 
             player.setSequence(seq);
