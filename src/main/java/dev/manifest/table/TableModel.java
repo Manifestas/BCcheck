@@ -1,5 +1,7 @@
 package dev.manifest.table;
 
+import dev.manifest.util.MidiPlayer;
+
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,7 @@ public class TableModel extends AbstractTableModel {
     }
 
     public void addProduct(Product product) {
+        MidiPlayer.playNewProduct();
         productList.add(product);
         fireTableDataChanged();
     }
