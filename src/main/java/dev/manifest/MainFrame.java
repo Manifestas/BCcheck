@@ -2,6 +2,8 @@ package dev.manifest;
 
 import dev.manifest.data.DbHelper;
 import dev.manifest.table.TableView;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,11 @@ public class MainFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
                 DbHelper.dispose();
+                try {
+                    GlobalScreen.unregisterNativeHook();
+                } catch (NativeHookException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }
