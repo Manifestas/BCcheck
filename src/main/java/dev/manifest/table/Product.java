@@ -42,6 +42,15 @@ public class Product {
         return Objects.hash(name, color, size);
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", size='" + size + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
