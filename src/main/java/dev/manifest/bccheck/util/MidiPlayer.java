@@ -1,4 +1,4 @@
-package dev.manifest.util;
+package dev.manifest.bccheck.util;
 
 import javax.sound.midi.*;
 

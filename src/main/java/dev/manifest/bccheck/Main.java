@@ -1,7 +1,7 @@
-package dev.manifest;
+package dev.manifest.bccheck;
 
-import dev.manifest.data.DbHelper;
-import dev.manifest.table.TableModel;
+import dev.manifest.bccheck.data.DbHelper;
+import dev.manifest.bccheck.table.TableModel;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import rx.Observable;

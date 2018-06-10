@@ -1,4 +1,4 @@
-package dev.manifest.data;
+package dev.manifest.bccheck.data;
 
 
 public final class DbContract {

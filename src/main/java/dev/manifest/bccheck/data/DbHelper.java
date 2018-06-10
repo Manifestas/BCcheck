@@ -1,15 +1,19 @@
-package dev.manifest.data;
+package dev.manifest.bccheck.data;
 
-import dev.manifest.table.Product;
-import dev.manifest.data.DbContract.ModelEntry;
-import dev.manifest.data.DbContract.ColorEntry;
-import dev.manifest.data.DbContract.SizeEntry;
-import dev.manifest.data.DbContract.LogPluCostEntry;
-import dev.manifest.data.DbContract.BarcodeEntry;
+import dev.manifest.bccheck.table.Product;
+import dev.manifest.bccheck.data.DbContract.ModelEntry;
+import dev.manifest.bccheck.data.DbContract.ColorEntry;
+import dev.manifest.bccheck.data.DbContract.SizeEntry;
+import dev.manifest.bccheck.data.DbContract.LogPluCostEntry;
+import dev.manifest.bccheck.data.DbContract.BarcodeEntry;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DbHelper {
+
+    private final static Logger log = Logger.getLogger(DbHelper.class.getName());
 
     private static Connection connection;
     private static Statement statement;
@@ -18,24 +22,30 @@ public class DbHelper {
     public static Connection getConnection() throws Exception {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         connection = DriverManager.getConnection(DbContract.DB_CONN_URL);
+
+        log.finest("Returning connection = " + connection);
+
         return connection;
     }
 
     public static void closeConnection() throws SQLException {
         if (connection != null) {
             connection.close();
+            log.finest("Closing connection");
         }
     }
 
     public static void closeStatement() throws SQLException {
         if (statement != null) {
             statement.close();
+            log.finest("Closing statement");
         }
     }
 
     public static void closeResultSet() throws SQLException {
         if (resultSet != null) {
             resultSet.close();
+            log.finest("Closing resultSet");
         }
     }
 
@@ -45,7 +55,7 @@ public class DbHelper {
             closeStatement();
             closeConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.log(Level.WARNING, "Exception while disposing DB: ", e.getMessage());
         }
     }
 
@@ -86,7 +96,7 @@ public class DbHelper {
                 }
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.WARNING, "Exception: ", e.getMessage());
             dispose();
         }
         return product;

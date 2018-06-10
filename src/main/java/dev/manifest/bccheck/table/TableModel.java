@@ -1,6 +1,6 @@
-package dev.manifest.table;
+package dev.manifest.bccheck.table;
 
-import dev.manifest.util.MidiPlayer;
+import dev.manifest.bccheck.util.MidiPlayer;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package dev.manifest.table;
+package dev.manifest.bccheck.table;
 
 import java.util.Objects;
 

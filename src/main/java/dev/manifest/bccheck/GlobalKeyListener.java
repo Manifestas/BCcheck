@@ -1,4 +1,4 @@
-package dev.manifest;
+package dev.manifest.bccheck;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
