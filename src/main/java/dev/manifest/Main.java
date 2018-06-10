@@ -12,17 +12,30 @@ import rx.schedulers.SwingScheduler;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Main {
 
+    private final static Logger log = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
+
+        try {
+            InputStream configFile = Main.class.getResourceAsStream("/logging.properties");
+            LogManager.getLogManager().readConfiguration(configFile);
+        } catch (IOException e) {
+            log.log(Level.WARNING, "Could not open configuration file. Exception: ", e.getMessage());
+            log.info("Logging not configured (console output only)");
+        }
+
 
         try {
             GlobalScreen.registerNativeHook();
