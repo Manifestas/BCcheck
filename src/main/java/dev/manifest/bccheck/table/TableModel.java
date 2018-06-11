@@ -28,6 +28,8 @@ public class TableModel extends AbstractTableModel {
     /** value of the "quantity" column for easy import to TradeX. */
     private static final int LAST_COLUMN_VALUE = 1;
 
+    private final String[] columnNames = {"Модель", "Цвет", "Размер", "Кол-во"};
+
     /** List for storing table records. */
     private List<Product> productList = new ArrayList<>();
 
@@ -67,6 +69,11 @@ public class TableModel extends AbstractTableModel {
             default:
                 throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
         }
+    }
+
+    @Override
+    public String getColumnName(int columnIndex) {
+        return columnNames[columnIndex];
     }
 
     /**
