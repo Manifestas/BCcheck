@@ -10,6 +10,8 @@ public class Table extends JTable {
         setModel(TableModel.getInstance());
         // you can select one cell, rather than the entire row
         setCellSelectionEnabled(true);
+
+        getTableHeader().setReorderingAllowed(false);
     }
 
 }
