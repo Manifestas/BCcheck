@@ -1,4 +1,4 @@
-package dev.manifest.bccheck;
+package dev.manifest.bccheck.ui;
 
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.table.Table;
