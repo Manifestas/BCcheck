@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         initTextArea();
         initTable();
+        initToolbar();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -52,5 +53,9 @@ public class MainFrame extends JFrame {
         Table table = new Table();
         JScrollPane tableScroll = new JScrollPane(table);
         getContentPane().add(BorderLayout.CENTER, tableScroll);
+    }
+
+    private void initToolbar() {
+        add(BorderLayout.NORTH, new ToolBar());
     }
 }
