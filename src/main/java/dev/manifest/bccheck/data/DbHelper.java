@@ -17,10 +17,9 @@ public class DbHelper {
     private final static Logger log = Logger.getLogger(DbHelper.class.getName());
 
     private static Connection connection;
-    private static Statement statement;
-    private static ResultSet resultSet;
+    private static PreparedStatement statement;
 
-    private static Connection getConnection() throws Exception {
+    private static Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         connection = DriverManager.getConnection(DbContract.DB_CONN_URL);
 
@@ -43,16 +42,8 @@ public class DbHelper {
         }
     }
 
-    private static void closeResultSet() throws SQLException {
-        if (resultSet != null) {
-            resultSet.close();
-            log.finest("Closing resultSet");
-        }
-    }
-
     public static void dispose() {
         try {
-            closeResultSet();
             closeStatement();
             closeConnection();
         } catch (SQLException e) {
@@ -61,9 +52,13 @@ public class DbHelper {
     }
 
     private static ResultSet getResultSet(String barcode) throws SQLException{
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(DbContract.queryQty(barcode));
-        return resultSet;
+        if (statement == null) {
+            // using PreparedStatement instead Statement reduces execution time.
+            statement = connection.prepareStatement(DbContract.queryQty);
+            // replace first question mark placeholder with second argument String.
+            statement.setString(1, barcode);
+        }
+        return statement.executeQuery();
     }
 
     private static Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
@@ -92,30 +87,35 @@ public class DbHelper {
 
                 connection = getConnection();
             }
-            ResultSet rs = getResultSet(barcode);
-            if (rs == null) {
-                log.finest("ResultSet == null");
+            try (ResultSet rs = getResultSet(barcode)) {
+                if (rs == null) {
+                    log.finest("ResultSet == null");
 
-                return null;
-            }
-            // check each size
-            while (rs.next()) {
-                //if the quantity of goods with this size is greater than zero
-                if (rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
-                    log.finest("Quantity with this size > 0");
-                    //immediately go out with null
                     return null;
                 }
-                //if barcode matches argument...
-                if (rs.getString(BarcodeEntry.COLUMN_BARCODE).equals(barcode)) {
-                    // ... remember it in product
-                    product = getProductFromResultSet(rs);
+                // check each size
+                while (rs.next()) {
+                    //if the quantity of goods with this size is greater than zero
+                    if (rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
+                        log.finest("Quantity with this size > 0");
+                        //immediately go out with null
+                        return null;
+                    }
+                    //if barcode matches argument...
+                    if (rs.getString(BarcodeEntry.COLUMN_BARCODE).equals(barcode)) {
+                        // ... remember it in product
+                        product = getProductFromResultSet(rs);
+                    }
                 }
             }
-        }catch (Exception e) {
-            log.log(Level.WARNING, "Exception while getting DB query: ", e.getMessage());
+        }catch (SQLException e) {
+            for(Throwable t: e) {
+                log.log(Level.WARNING, "SQLException while getting DB query: ", t.getMessage());
+            }
             // close all
             dispose();
+        } catch (ClassNotFoundException e) {
+            log.log(Level.WARNING, "ClassNotFoundException while loading JDBC driver: ", e.getMessage());
         }
 
         log.finest("Returning a new product: " + product);
