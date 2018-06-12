@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 
 public class SettingsDialog extends JDialog {
 
-    public SettingsDialog(JFrame parent) {
-        super(parent);
+    public SettingsDialog() {
+        setSize(400, 200);
+        initButtons();
+        setVisible(true);
     }
 
     private void initButtons() {
@@ -18,8 +20,8 @@ public class SettingsDialog extends JDialog {
 
             }
         });
-        JButton cancelButon = new JButton("Cancel");
-        cancelButon.addActionListener(new ActionListener() {
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -27,7 +29,7 @@ public class SettingsDialog extends JDialog {
         });
 
         add(saveButton);
-        add(cancelButon);
+        add(cancelButton);
 
     }
 }

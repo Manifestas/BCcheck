@@ -1,6 +1,8 @@
 package dev.manifest.bccheck.ui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ToolBar extends JToolBar {
 
@@ -15,6 +17,12 @@ public class ToolBar extends JToolBar {
         ImageIcon settingsIcon = createImageIcon("/image/icon_settings.png");
         JButton settingsButton = new JButton(settingsIcon);
         settingsButton.setToolTipText("Open Settings");
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SettingsDialog();
+            }
+        });
 
         add(settingsButton);
     }
