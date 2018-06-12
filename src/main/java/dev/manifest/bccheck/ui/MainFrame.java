@@ -15,12 +15,21 @@ public class MainFrame extends JFrame {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
+    private JScrollPane logScroll;
+    private JScrollPane tableScroll;
+    private ToolBar toolBar;
+
     public MainFrame() {
 
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         initTextArea();
         initTable();
         initToolbar();
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, tableScroll, logScroll);
+        add(BorderLayout.CENTER, splitPane);
+
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -42,20 +51,18 @@ public class MainFrame extends JFrame {
         logTextArea.setEditable(false);
         logTextArea.setMargin(new Insets(5, 5, 5, 5));
 
-        JScrollPane logScroll = new JScrollPane(logTextArea);
+        logScroll = new JScrollPane(logTextArea);
         logScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         logScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        getContentPane().add(BorderLayout.SOUTH, logScroll);
     }
 
     private void initTable() {
         Table table = new Table();
-        JScrollPane tableScroll = new JScrollPane(table);
-        getContentPane().add(BorderLayout.CENTER, tableScroll);
+        tableScroll = new JScrollPane(table);
     }
 
     private void initToolbar() {
-        add(BorderLayout.NORTH, new ToolBar());
+        toolBar = new ToolBar();
+        add(BorderLayout.NORTH, toolBar);
     }
 }
