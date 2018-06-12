@@ -25,10 +25,7 @@ public class MainFrame extends JFrame {
         initTextArea();
         initTable();
         initToolbar();
-
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, tableScroll, logScroll);
-        add(BorderLayout.CENTER, splitPane);
-
+        initSplitPane();
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -64,5 +61,11 @@ public class MainFrame extends JFrame {
     private void initToolbar() {
         toolBar = new ToolBar();
         add(BorderLayout.NORTH, toolBar);
+    }
+
+    private void initSplitPane() {
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, tableScroll, logScroll);
+        splitPane.setOneTouchExpandable(true);
+        add(BorderLayout.CENTER, splitPane);
     }
 }
