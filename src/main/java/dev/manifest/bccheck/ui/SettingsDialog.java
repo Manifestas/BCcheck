@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 public class SettingsDialog extends JDialog {
 
     public SettingsDialog() {
+        setTitle("Settings");
         setSize(400, 200);
         initButtons();
         setVisible(true);
