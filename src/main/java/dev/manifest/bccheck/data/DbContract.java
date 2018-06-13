@@ -14,15 +14,17 @@ public final class DbContract {
     /**
      * User login.
      */
-    private static final String DB_LOGIN = "tv";
+    public static final String DB_LOGIN = "tv";
 
     /**
      * User password.
      */
-    private static final String DB_PASSWORD = "12345678";
+    public static final String DB_PASSWORD = "12345678";
+    public static final String DB_IP = "192.168.14.2";
+    public static final String DB_PORT = "1433";
+    public static final int UNIMOLL_ID = 119;
 
-    private static final String DB_IP_ADDRESS = "192.168.14.2:1433";
-    private static final int UNIMOLL_ID = 119;
+    private static final String DB_IP_ADDRESS = DB_IP + DB_PORT;
 
     /**
      * Connection url.
