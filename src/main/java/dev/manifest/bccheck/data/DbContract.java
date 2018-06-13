@@ -47,7 +47,7 @@ public final class DbContract {
     /**
      * Query from TradeX table for getting Goods quantity.
      */
-    public static String queryQty =
+    public static final String queryQty =
                 "SELECT * FROM "
                 + "(SELECT "
                 + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE + COMMA
@@ -83,7 +83,7 @@ public final class DbContract {
                 + " (SELECT " + BarcodeEntry.COLUMN_ID_PLU
                 + " FROM " + BarcodeEntry.TABLE_NAME
                 + " WHERE " + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE
-                + EQUALS + "'" + "? " + "')))"
+                + EQUALS  + "? )))"
                 + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + UNIMOLL_ID + ";";
 
 

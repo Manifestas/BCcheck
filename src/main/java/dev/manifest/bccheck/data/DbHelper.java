@@ -55,9 +55,9 @@ public class DbHelper {
         if (statement == null) {
             // using PreparedStatement instead Statement reduces execution time.
             statement = connection.prepareStatement(DbContract.queryQty);
-            // replace first question mark placeholder with second argument String.
-            statement.setString(1, barcode);
         }
+        // replace first question mark placeholder with second argument String.
+        statement.setString(1, barcode);
         return statement.executeQuery();
     }
 
@@ -110,7 +110,7 @@ public class DbHelper {
             }
         }catch (SQLException e) {
             for(Throwable t: e) {
-                log.log(Level.WARNING, "SQLException while getting DB query: ", t.getMessage());
+                log.log(Level.WARNING, "SQLException while getting DB query: ", t);
             }
             // close all
             dispose();
