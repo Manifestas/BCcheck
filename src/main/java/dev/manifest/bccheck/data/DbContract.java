@@ -24,7 +24,7 @@ public final class DbContract {
     public static final String DB_PORT = "1433";
     public static final int UNIMOLL_ID = 119;
 
-    private static final String DB_IP_ADDRESS = DB_IP + DB_PORT;
+    private static final String DB_IP_ADDRESS = DB_IP + ":" + DB_PORT;
 
     /**
      * Connection url.
