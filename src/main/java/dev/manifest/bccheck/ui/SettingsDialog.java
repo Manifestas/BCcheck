@@ -6,8 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 public class SettingsDialog extends JDialog {
+
+    private Preferences root = Preferences.userRoot();
+    private Preferences node = root.node("/dev/manifest/bccheck");
 
     public SettingsDialog() {
 

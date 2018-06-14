@@ -77,7 +77,7 @@ public class DbHelper {
 
         Product currentProduct = new Product(modelName, color, size);
 
-        log.info("Getting a Product from ResultSet: " + currentProduct);
+        log.finest("Getting a Product from ResultSet: " + currentProduct);
 
         return currentProduct;
     }
@@ -106,7 +106,7 @@ public class DbHelper {
                 while (rs.next()) {
                     //if the quantity of goods with this size is greater than zero
                     if (rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
-                        log.finest("Quantity with this size > 0");
+                        log.info("Quantity with this size > 0");
                         //immediately go out with null
                         return null;
                     }
