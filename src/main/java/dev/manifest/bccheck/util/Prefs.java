@@ -30,4 +30,20 @@ public class Prefs {
         return node.get(PASSWORD, DbContract.DB_PASSWORD);
     }
 
+    public static void saveIp(String ip) {
+        node.put(IP, ip);
+    }
+
+    public static void savePort(String port) {
+        node.put(PORT, port);
+    }
+
+    public static void  saveLogin(String login) {
+        node.put(LOGIN, login);
+    }
+
+    public static void savePassword(String password) {
+        node.put(PASSWORD, password);
+    }
+
 }
