@@ -19,13 +19,17 @@ public class DbHelper {
     private static Connection connection;
     private static PreparedStatement statement;
 
-    private static Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        connection = DriverManager.getConnection(DbContract.DB_CONN_URL);
+    private static void dbConnect() {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connection = DriverManager.getConnection(DbContract.DB_CONN_URL);
 
-        log.finest("Returning connection = " + connection);
-
-        return connection;
+            log.finest("Got connection: " + connection);
+        } catch (ClassNotFoundException e) {
+            log.log(Level.WARNING, "ClassNotFoundException while loading JDBC driver: ", e.getMessage());
+        } catch (SQLException e) {
+            log.log(Level.WARNING, "Database access error: ", e.getMessage());
+        }
     }
 
     private static void closeConnection() throws SQLException {
@@ -49,6 +53,11 @@ public class DbHelper {
         } catch (SQLException e) {
             log.log(Level.WARNING, "Exception while disposing DB: ", e.getMessage());
         }
+    }
+
+    public static void dbReconnect() {
+        dispose();
+        dbConnect();
     }
 
     private static ResultSet getResultSet(String barcode) throws SQLException{
@@ -85,7 +94,7 @@ public class DbHelper {
             if (connection == null) {
                 log.finest("Connection == null");
 
-                connection = getConnection();
+                dbConnect();
             }
             try (ResultSet rs = getResultSet(barcode)) {
                 if (rs == null) {
@@ -114,8 +123,6 @@ public class DbHelper {
             }
             // close all
             dispose();
-        } catch (ClassNotFoundException e) {
-            log.log(Level.WARNING, "ClassNotFoundException while loading JDBC driver: ", e.getMessage());
         }
 
         log.finest("Returning a new product: " + product);
