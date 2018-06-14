@@ -22,18 +22,14 @@ public final class DbContract {
     public static final String DB_PASSWORD = "12345678";
     public static final String DB_IP = "192.168.14.2";
     public static final String DB_PORT = "1433";
-    public static final int UNIMOLL_ID = 119;
-
-    private static final String DB_IP_ADDRESS = DB_IP + ":" + DB_PORT;
+    public static final String UNIMOLL_ID = "119";
 
     /**
      * Connection url.
+     * %1$s - IP, %2$s - port, %3$s - login, %4$s - password.
      */
-    public static final String DB_CONN_URL = "jdbc:sqlserver://"
-                                             + DB_IP_ADDRESS + ";"
-                                             + "databaseName=" + DB_NAME
-                                             + ";user=" + DB_LOGIN
-                                             + ";password=" + DB_PASSWORD + ";";
+    public static final String DB_CONN_URL = "jdbc:sqlserver://%1$s:%2$s;databaseName=" + DB_NAME
+                                             + ";user=%3$s;password=%4$s;";
 
     /** SQL statement. */
     private static final String INNER_JOIN = " INNER JOIN ";
