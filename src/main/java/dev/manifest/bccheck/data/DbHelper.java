@@ -7,6 +7,7 @@ import dev.manifest.bccheck.data.DbContract.ColorEntry;
 import dev.manifest.bccheck.data.DbContract.SizeEntry;
 import dev.manifest.bccheck.data.DbContract.LogPluCostEntry;
 import dev.manifest.bccheck.data.DbContract.BarcodeEntry;
+import dev.manifest.bccheck.util.Prefs;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -22,7 +23,8 @@ public class DbHelper {
     private static void dbConnect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(DbContract.DB_CONN_URL);
+            String dbUrl = String.format(DbContract.DB_CONN_URL, Prefs.ip(), Prefs.port(), Prefs.login(), Prefs.password());
+            connection = DriverManager.getConnection(dbUrl);
 
             log.finest("Got connection: " + connection);
         } catch (ClassNotFoundException e) {
@@ -60,7 +62,7 @@ public class DbHelper {
         dbConnect();
     }
 
-    private static ResultSet getResultSet(String barcode) throws SQLException{
+    private static ResultSet getResultSet(String barcode) throws SQLException {
         if (statement == null) {
             // using PreparedStatement instead Statement reduces execution time.
             statement = connection.prepareStatement(DbContract.queryQty);
@@ -85,6 +87,7 @@ public class DbHelper {
     /**
      * Returns the product received from the database with this barcode,
      * if there are no any sizes of this article on the residuals
+     *
      * @param barcode of product.
      * @return A Product with this barcode, if quantity of any of its sizes is zero.
      */
@@ -117,8 +120,8 @@ public class DbHelper {
                     }
                 }
             }
-        }catch (SQLException e) {
-            for(Throwable t: e) {
+        } catch (SQLException e) {
+            for (Throwable t : e) {
                 log.log(Level.WARNING, "SQLException while getting DB query: ", t);
             }
             // close all
