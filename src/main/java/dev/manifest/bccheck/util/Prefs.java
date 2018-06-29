@@ -64,4 +64,21 @@ public class Prefs {
         String pattern = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         return ip.matches(pattern);
     }
+
+    /**
+     * Checks if port from 1 to 65535.
+     * @param port the string to validate.
+     * @return true if the portNumber is between 1 and 65535.
+     */
+    public static boolean isPortValid(final String port) {
+        try {
+            int portNumber = Integer.parseInt(port);
+            if (portNumber >= 1 && portNumber <= 65535) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return false;
+    }
 }
