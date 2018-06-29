@@ -55,4 +55,13 @@ public class Prefs {
         node.put(OBJECT, object);
     }
 
+    /**
+     * Validate an IPv4 address.
+     * @param ip the string to validate.
+     * @return true if the string validates as an IPV4 address.
+     */
+    public static boolean isIPV4(final String ip) {
+        String pattern = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        return ip.matches(pattern);
+    }
 }
