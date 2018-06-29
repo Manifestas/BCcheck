@@ -1,34 +1,36 @@
 package dev.manifest.bccheck.ui;
 
-import dev.manifest.bccheck.data.DbContract;
+import dev.manifest.bccheck.util.Prefs;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.prefs.Preferences;
 
 public class SettingsDialog extends JDialog {
 
-    private Preferences root = Preferences.userRoot();
-    private Preferences node = root.node("/dev/manifest/bccheck");
+    private JButton saveButton;
+    private JButton cancelButton;
+
+    private JLabel lblIP;
+    private JTextField tfIP;
+
+    private JLabel lblPort;
+    private JTextField tfPort;
+
+    private JLabel lblUser;
+    private JTextField tfUser;
+
+    private JLabel lblPassword;
+    private JPasswordField passwordField;
+
+    private JLabel lblObject;
+    private JTextField tfObject;
 
     public SettingsDialog() {
 
-        JLabel lblIP = new JLabel("Database IP:");
-        JTextField tfIP = new JTextField(DbContract.DB_IP);
+        initLabelsTextFields();
 
-        JLabel lblPort = new JLabel("Port:");
-        JTextField tfPort = new JTextField(DbContract.DB_PORT);
-
-        JLabel lblUser = new JLabel("User:");
-        JTextField tfUser = new JTextField(DbContract.DB_LOGIN);
-
-        JLabel lblPassword = new JLabel("Password");
-        JPasswordField passwordField = new JPasswordField(DbContract.DB_PASSWORD);
-
-        JLabel lblObject = new JLabel("Object");
-        JTextField tfObject = new JTextField(String.valueOf(DbContract.UNIMOLL_ID));
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
@@ -85,5 +87,22 @@ public class SettingsDialog extends JDialog {
         setTitle("Settings");
         setSize(350, 250);
         setVisible(true);
+    }
+
+    private void initLabelsTextFields() {
+        lblIP = new JLabel("Database IP:");
+        tfIP = new JTextField(Prefs.getIp());
+
+        lblPort = new JLabel("Port:");
+        tfPort = new JTextField(Prefs.getPort());
+
+        lblUser = new JLabel("User:");
+        tfUser = new JTextField(Prefs.getLogin());
+
+        lblPassword = new JLabel("Password");
+        passwordField = new JPasswordField(Prefs.getPassword());
+
+        lblObject = new JLabel("Object");
+        tfObject = new JTextField(Prefs.getObject());
     }
 }
