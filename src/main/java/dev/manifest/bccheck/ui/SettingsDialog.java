@@ -4,8 +4,6 @@ import dev.manifest.bccheck.util.Prefs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SettingsDialog extends JDialog {
 
@@ -30,24 +28,42 @@ public class SettingsDialog extends JDialog {
     public SettingsDialog() {
 
         initLabelsTextFields();
+        initButtons();
+        setViewLocation();
 
+        setTitle("Settings");
+        setSize(350, 250);
+        setVisible(true);
+    }
 
-        JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    private void initLabelsTextFields() {
+        lblIP = new JLabel("Database IP:");
+        tfIP = new JTextField(Prefs.getIp());
 
-            }
+        lblPort = new JLabel("Port:");
+        tfPort = new JTextField(Prefs.getPort());
+
+        lblUser = new JLabel("User:");
+        tfUser = new JTextField(Prefs.getLogin());
+
+        lblPassword = new JLabel("Password");
+        passwordField = new JPasswordField(Prefs.getPassword());
+
+        lblObject = new JLabel("Object");
+        tfObject = new JTextField(Prefs.getObject());
+    }
+
+    private void initButtons() {
+        saveButton = new JButton("Save");
+        saveButton.addActionListener(e -> {
+
         });
 
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SettingsDialog.this.dispose();
-            }
-        });
+        cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(e -> SettingsDialog.this.dispose());
+    }
 
+    private void setViewLocation() {
         GridBagLayout gridBagLayout = new GridBagLayout();
         setLayout(gridBagLayout);
 
@@ -81,28 +97,13 @@ public class SettingsDialog extends JDialog {
                 .setFill(GridBagConstraints.HORIZONTAL)
                 .setInsets(5));
 
-        add(saveButton, new GBC(1, 5).setWeight(10, 10).setInsets(20).setAnchor(GridBagConstraints.SOUTHEAST));
-        add(cancelButton, new GBC(2, 5).setWeight(0, 10).setInsets(20).setAnchor(GridBagConstraints.SOUTHEAST));
-
-        setTitle("Settings");
-        setSize(350, 250);
-        setVisible(true);
-    }
-
-    private void initLabelsTextFields() {
-        lblIP = new JLabel("Database IP:");
-        tfIP = new JTextField(Prefs.getIp());
-
-        lblPort = new JLabel("Port:");
-        tfPort = new JTextField(Prefs.getPort());
-
-        lblUser = new JLabel("User:");
-        tfUser = new JTextField(Prefs.getLogin());
-
-        lblPassword = new JLabel("Password");
-        passwordField = new JPasswordField(Prefs.getPassword());
-
-        lblObject = new JLabel("Object");
-        tfObject = new JTextField(Prefs.getObject());
+        add(saveButton, new GBC(1, 5)
+                .setWeight(10, 10)
+                .setInsets(20)
+                .setAnchor(GridBagConstraints.SOUTHEAST));
+        add(cancelButton, new GBC(2, 5)
+                .setWeight(0, 10)
+                .setInsets(20)
+                .setAnchor(GridBagConstraints.SOUTHEAST));
     }
 }
