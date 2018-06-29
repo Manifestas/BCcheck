@@ -1,5 +1,6 @@
 package dev.manifest.bccheck.ui;
 
+import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.util.Prefs;
 
 import javax.swing.*;
@@ -56,7 +57,10 @@ public class SettingsDialog extends JDialog {
     private void initButtons() {
         saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
-
+            if (savePreference()) {
+                DbHelper.dbReconnect();
+                dispose();
+            }
         });
 
         cancelButton = new JButton("Cancel");
@@ -105,5 +109,27 @@ public class SettingsDialog extends JDialog {
                 .setWeight(0, 10)
                 .setInsets(20)
                 .setAnchor(GridBagConstraints.SOUTHEAST));
+    }
+
+    private boolean savePreference() {
+        final String alertDialogTitle = "Error saving preferences";
+
+        String ip = tfIP.getText();
+        if (!Prefs.isIPV4(ip)) {
+            JOptionPane.showMessageDialog(this, "IP address is not valid!",
+                    alertDialogTitle, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        String port = tfPort.getText();
+        if (!Prefs.isPortValid(port)) {
+            JOptionPane.showMessageDialog(this, "Port is not valid!",
+                    alertDialogTitle, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Prefs.saveIp(port);
+        Prefs.saveIp(ip);
+        return true;
     }
 }
