@@ -6,10 +6,11 @@ import java.util.prefs.Preferences;
 
 public class Prefs {
 
-    public static final String IP = "getIp";
-    public static final String PORT = "getPort";
-    public static final String LOGIN = "getLogin";
-    public static final String PASSWORD = "getPassword";
+    private static final String IP = "getIp";
+    private static final String PORT = "getPort";
+    private static final String LOGIN = "getLogin";
+    private static final String PASSWORD = "getPassword";
+    private static final String OBJECT = "getObject";
 
     private static Preferences root = Preferences.userRoot();
     private static Preferences node = root.node("/dev/manifest/bccheck");
@@ -30,6 +31,10 @@ public class Prefs {
         return node.get(PASSWORD, DbContract.DB_PASSWORD);
     }
 
+    public static String getObject() {
+        return node.get(OBJECT, DbContract.UNIMOLL_ID);
+    }
+
     public static void saveIp(String ip) {
         node.put(IP, ip);
     }
@@ -44,6 +49,10 @@ public class Prefs {
 
     public static void savePassword(String password) {
         node.put(PASSWORD, password);
+    }
+
+    public static void saveObject(String object) {
+        node.put(OBJECT, object);
     }
 
 }
