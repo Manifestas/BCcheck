@@ -42,7 +42,7 @@ public class SettingsDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                SettingsDialog.this.dispose();
             }
         });
 
