@@ -23,7 +23,7 @@ public class DbHelper {
     private static void dbConnect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String dbUrl = String.format(DbContract.DB_CONN_URL, Prefs.ip(), Prefs.port(), Prefs.login(), Prefs.password());
+            String dbUrl = String.format(DbContract.DB_CONN_URL, Prefs.getIp(), Prefs.getPort(), Prefs.getLogin(), Prefs.getPassword());
             connection = DriverManager.getConnection(dbUrl);
 
             log.finest("Got connection: " + connection);
@@ -105,6 +105,7 @@ public class DbHelper {
 
                     return null;
                 }
+                // TODO: if model absolutly new resultset is empty
                 // check each size
                 while (rs.next()) {
                     //if the quantity of goods with this size is greater than zero
