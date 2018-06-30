@@ -4,7 +4,6 @@ import javax.swing.*;
 
 public class Table extends JTable {
 
-
     public Table() {
         super();
         setModel(TableModel.getInstance());
@@ -13,5 +12,4 @@ public class Table extends JTable {
 
         getTableHeader().setReorderingAllowed(false);
     }
-
 }
