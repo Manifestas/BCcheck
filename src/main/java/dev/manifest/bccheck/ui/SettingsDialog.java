@@ -17,8 +17,8 @@ public class SettingsDialog extends JDialog {
     private JLabel lblPort;
     private JTextField tfPort;
 
-    private JLabel lblUser;
-    private JTextField tfUser;
+    private JLabel lblLogin;
+    private JTextField tfLogin;
 
     private JLabel lblPassword;
     private JPasswordField passwordField;
@@ -44,8 +44,8 @@ public class SettingsDialog extends JDialog {
         lblPort = new JLabel("Port:");
         tfPort = new JTextField(Prefs.getPort());
 
-        lblUser = new JLabel("User:");
-        tfUser = new JTextField(Prefs.getLogin());
+        lblLogin = new JLabel("Login:");
+        tfLogin = new JTextField(Prefs.getLogin());
 
         lblPassword = new JLabel("Password");
         passwordField = new JPasswordField(Prefs.getPassword());
@@ -83,8 +83,8 @@ public class SettingsDialog extends JDialog {
                 .setFill(GridBagConstraints.HORIZONTAL)
                 .setInsets(5));
 
-        add(lblUser, new GBC(0, 2).setInsets(5));
-        add(tfUser, new GBC(1, 2, 2, 1)
+        add(lblLogin, new GBC(0, 2).setInsets(5));
+        add(tfLogin, new GBC(1, 2, 2, 1)
                 .setWeight(10, 0)
                 .setFill(GridBagConstraints.HORIZONTAL)
                 .setInsets(5));
@@ -131,8 +131,21 @@ public class SettingsDialog extends JDialog {
             return false;
         }
 
+        String login = tfLogin.getText();
+        String password = new String(passwordField.getPassword());
+        String object = tfObject.getText();
+        if (!Prefs.isObjectValid(object)) {
+            JOptionPane.showMessageDialog(this, "Object is not valid!",
+                    alertDialogTitle, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        Prefs.saveLogin(login);
+        Prefs.savePassword(password);
         Prefs.saveIp(port);
         Prefs.saveIp(ip);
+        Prefs.saveObject(object);
+
         return true;
     }
 }

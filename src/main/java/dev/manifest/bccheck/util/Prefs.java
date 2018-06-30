@@ -81,4 +81,21 @@ public class Prefs {
         }
         return false;
     }
+
+    /**
+     * Checks if object number from 0 to 99999.
+     * @param object the string to validate.
+     * @return true if the object is between 0 and 99999.
+     */
+    public static boolean isObjectValid(final String object) {
+        try {
+            int portNumber = Integer.parseInt(object);
+            if (portNumber >= 0 && portNumber <= 99999) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return false;
+    }
 }
