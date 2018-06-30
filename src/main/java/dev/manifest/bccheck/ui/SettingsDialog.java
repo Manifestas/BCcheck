@@ -115,6 +115,9 @@ public class SettingsDialog extends JDialog {
         final String alertDialogTitle = "Error saving preferences";
 
         String ip = tfIP.getText();
+        // replacing commas with dots, if russian language was enabled while typing on numkeys.
+        ip = ip.replace(',', '.');
+        tfIP.setText(ip);
         if (!Prefs.isIPV4(ip)) {
             JOptionPane.showMessageDialog(this, "IP address is not valid!",
                     alertDialogTitle, JOptionPane.ERROR_MESSAGE);
