@@ -57,7 +57,8 @@ public class SettingsDialog extends JDialog {
     private void initButtons() {
         saveButton = new JButton("Save");
         saveButton.addActionListener(e -> {
-            if (savePreference()) {
+            if (isEnteredDataCorrect()) {
+                savePreference();
                 DbHelper.dbReconnect();
                 dispose();
             }
@@ -111,7 +112,21 @@ public class SettingsDialog extends JDialog {
                 .setAnchor(GridBagConstraints.SOUTHEAST));
     }
 
-    private boolean savePreference() {
+    private void savePreference() {
+        Prefs.saveIp(tfIP.getText());
+        Prefs.savePort(tfPort.getText());
+        Prefs.saveLogin(tfLogin.getText());
+        Prefs.savePassword(new String(passwordField.getPassword()));
+        Prefs.saveObject(tfObject.getText());
+    }
+
+    /**
+     * Checks if entered data in the settings is correct. Check is performed from top field downward.
+     * As soon as incorrectly entered field is found- immediately returns false, without performing further verification.
+     * If in any field incorrect data AlertDialog appears.
+     * @return true if all data is correct, false if any field is incorrect.
+     */
+    private boolean isEnteredDataCorrect() {
         final String alertDialogTitle = "Error saving preferences";
 
         String ip = tfIP.getText();
@@ -131,20 +146,12 @@ public class SettingsDialog extends JDialog {
             return false;
         }
 
-        String login = tfLogin.getText();
-        String password = new String(passwordField.getPassword());
         String object = tfObject.getText();
         if (!Prefs.isObjectValid(object)) {
             JOptionPane.showMessageDialog(this, "Object is not valid!",
                     alertDialogTitle, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
-        Prefs.saveLogin(login);
-        Prefs.savePassword(password);
-        Prefs.saveIp(port);
-        Prefs.saveIp(ip);
-        Prefs.saveObject(object);
 
         return true;
     }
