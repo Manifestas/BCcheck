@@ -7,6 +7,7 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,7 +22,6 @@ public class MainFrame extends JFrame {
 
     private JScrollPane logScroll;
     private JScrollPane tableScroll;
-    private ToolBar toolBar;
 
     public MainFrame() {
 
@@ -52,6 +52,10 @@ public class MainFrame extends JFrame {
         logTextArea.setEditable(false);
         logTextArea.setMargin(new Insets(5, 5, 5, 5));
 
+        // auto scroll down.
+        DefaultCaret caret = (DefaultCaret)logTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
+
         Handler windowHandler = new WindowHandler(logTextArea);
         windowHandler.setLevel(Level.ALL);
         Logger.getLogger("dev.manifest.bccheck").addHandler(windowHandler);
@@ -67,7 +71,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initToolbar() {
-        toolBar = new ToolBar();
+        ToolBar toolBar = new ToolBar();
         add(BorderLayout.NORTH, toolBar);
     }
 
