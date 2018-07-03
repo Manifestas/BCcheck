@@ -7,6 +7,7 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -51,6 +52,10 @@ public class MainFrame extends JFrame {
         logTextArea.setWrapStyleWord(true);
         logTextArea.setEditable(false);
         logTextArea.setMargin(new Insets(5, 5, 5, 5));
+
+        // auto scroll down.
+        DefaultCaret caret = (DefaultCaret)logTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         Handler windowHandler = new WindowHandler(logTextArea);
         windowHandler.setLevel(Level.ALL);
