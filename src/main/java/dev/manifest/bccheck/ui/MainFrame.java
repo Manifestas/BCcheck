@@ -1,5 +1,6 @@
 package dev.manifest.bccheck.ui;
 
+import dev.manifest.bccheck.WindowHandler;
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.table.Table;
 import org.jnativehook.GlobalScreen;
@@ -9,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainFrame extends JFrame {
 
@@ -47,6 +51,10 @@ public class MainFrame extends JFrame {
         logTextArea.setWrapStyleWord(true);
         logTextArea.setEditable(false);
         logTextArea.setMargin(new Insets(5, 5, 5, 5));
+
+        Handler windowHandler = new WindowHandler(logTextArea);
+        windowHandler.setLevel(Level.ALL);
+        Logger.getLogger("dev.manifest.bccheck").addHandler(windowHandler);
 
         logScroll = new JScrollPane(logTextArea);
         logScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
