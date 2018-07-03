@@ -69,6 +69,9 @@ public class DbHelper {
         }
         // replace first question mark placeholder with second argument String.
         statement.setString(1, barcode);
+        String object = Prefs.getObject();
+        statement.setString(2, object);
+
         return statement.executeQuery();
     }
 

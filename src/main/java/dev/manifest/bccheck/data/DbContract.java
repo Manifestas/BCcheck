@@ -82,7 +82,7 @@ public final class DbContract {
                 + " FROM " + BarcodeEntry.TABLE_NAME
                 + " WHERE " + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE
                 + EQUALS  + "? )))"
-                + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + UNIMOLL_ID + ";";
+                + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + "?;";
 
 
     /**
