@@ -39,7 +39,7 @@ public class TableModel extends AbstractTableModel {
      * @return the number of rows in the model.
      */
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return productList.size();
     }
 
@@ -55,7 +55,7 @@ public class TableModel extends AbstractTableModel {
      * @return the value Object at the specified cell.
      */
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
+    public synchronized Object getValueAt(int rowIndex, int columnIndex) {
         Product product = productList.get(rowIndex);
         switch (columnIndex) {
             case 0:
@@ -82,7 +82,7 @@ public class TableModel extends AbstractTableModel {
      * @return false if product argument is null or TableModel does not contains this product
      * or contains this article with any other size.
      */
-    public boolean containsArticle(Product product) {
+    public synchronized boolean containsArticle(Product product) {
         if (product == null) {
             return false;
         }
@@ -98,7 +98,7 @@ public class TableModel extends AbstractTableModel {
      * Adds product to TableModel list, plays MIDI sound and notifies about rows changed.
      * @param product that needs to be added.
      */
-    public void addProduct(Product product) {
+    public synchronized void addProduct(Product product) {
         // Play MIDI sound.
         MidiPlayer.playNewProduct();
         productList.add(product);
