@@ -27,7 +27,7 @@ public class TableModel extends AbstractTableModel {
     private static final int COLUMN_COUNT = 4;
     /** value of the "quantity" column for easy import to TradeX. */
     private static final int LAST_COLUMN_VALUE = 1;
-
+    // for easy exporting to TradeX
     private final String[] columnNames = {"Модель", "Цвет", "Размер", "Кол-во"};
 
     /** List for storing table records. */
@@ -40,7 +40,7 @@ public class TableModel extends AbstractTableModel {
      */
     @Override
     public synchronized int getRowCount() {
-        return productList.size();
+        return productList.size() + 1; // plus columnNames row.
     }
 
     @Override
@@ -56,24 +56,23 @@ public class TableModel extends AbstractTableModel {
      */
     @Override
     public synchronized Object getValueAt(int rowIndex, int columnIndex) {
-        Product product = productList.get(rowIndex);
-        switch (columnIndex) {
-            case 0:
-                return product.getName();
-            case 1:
-                return product.getColor();
-            case 2:
-                return product.getSize();
-            case 3:
-                return LAST_COLUMN_VALUE;
-            default:
-                throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
+        if (rowIndex == 0) {
+            return columnNames[columnIndex];
+        } else {
+            Product product = productList.get(rowIndex - 1); // minus columnNames row.
+            switch (columnIndex) {
+                case 0:
+                    return product.getName();
+                case 1:
+                    return product.getColor();
+                case 2:
+                    return product.getSize();
+                case 3:
+                    return LAST_COLUMN_VALUE;
+                default:
+                    throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
+            }
         }
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        return columnNames[columnIndex];
     }
 
     /**
