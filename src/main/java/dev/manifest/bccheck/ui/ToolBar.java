@@ -3,8 +3,12 @@ package dev.manifest.bccheck.ui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.logging.Logger;
 
 public class ToolBar extends JToolBar {
+
+    private static Logger log = Logger.getLogger(ToolBar.class.getName());
 
     public ToolBar() {
 
@@ -29,11 +33,11 @@ public class ToolBar extends JToolBar {
 
     /** Returns an ImageIcon, or null if the path was invalid. */
     private ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = getClass().getResource(path);
+        URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + path);
+            log.warning("Couldn't find file: " + path);
             return null;
         }
     }
