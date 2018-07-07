@@ -65,7 +65,7 @@ public class DbHelper {
     private static ResultSet getResultSet(String barcode) throws SQLException {
         if (statement == null) {
             // using PreparedStatement instead Statement reduces execution time.
-            statement = connection.prepareStatement(DbContract.queryQty);
+            statement = connection.prepareStatement(DbContract.queryBarcodeQty);
         }
         // replace first question mark placeholder with second argument String.
         statement.setString(1, barcode);

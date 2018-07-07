@@ -9,19 +9,25 @@ public final class DbContract {
      * Database name.
      */
     private static final String DB_NAME = "TradeX";
-
-    //TODO: move this to the SharedPreference and ask a user to enter log/pass in settings menu
     /**
-     * User login.
+     * Default user login.
      */
     public static final String DB_LOGIN = "tv";
-
     /**
-     * User password.
+     * Default user password.
      */
     public static final String DB_PASSWORD = "12345678";
+    /**
+     * Default DB IP address.
+     */
     public static final String DB_IP = "192.168.14.2";
+    /**
+     * Default DB port.
+     */
     public static final String DB_PORT = "1433";
+    /**
+     * Default db object.
+     */
     public static final String UNIMOLL_ID = "119";
 
     /**
@@ -45,7 +51,7 @@ public final class DbContract {
     /**
      * Query from TradeX table for getting Goods quantity.
      */
-    public static final String queryQty =
+    public static final String queryBarcodeQty =
                 "SELECT * FROM "
                 + "(SELECT "
                 + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE + COMMA
@@ -107,7 +113,6 @@ public final class DbContract {
          */
         public static final String COLUMN_ID_PLU = "ID_PLU";
 
-        //TODO: add check sum.
         /**
          * For fast searching in database, it is necessary that the length
          * of the barcode string must be 12.
