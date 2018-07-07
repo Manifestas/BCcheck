@@ -73,4 +73,14 @@ public class Product {
     public String getSize() {
         return size;
     }
+
+    /**
+     * Removes first zeros from the string.
+     * @param barcode String from which need to remove leading zeros.
+     * @return String with removed leading zeros.
+     */
+    private String removeLeadingZeros(String barcode) {
+        // ^ anchors to the start of the string. The 0* means zero or more 0 characters.
+        return barcode.replaceFirst("^0*", "");
+    }
 }
