@@ -49,7 +49,7 @@ public final class DbContract {
     private static final String EQUALS = " = ";
 
     /**
-     * Query from TradeX table for getting Goods quantity.
+     * Query from TradeX table for getting Goods quantity passing barcode and object.
      */
     public static final String queryBarcodeQty =
                 "SELECT * FROM "
@@ -89,6 +89,37 @@ public final class DbContract {
                 + " WHERE " + BarcodeEntry.TABLE_NAME + DOT + BarcodeEntry.COLUMN_BARCODE
                 + EQUALS  + "? )))"
                 + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + "?;";
+
+    /**
+     * Query from TradeX table for getting Goods quantity passing id_plu.
+     */
+    public static final String queryPluQty =
+            "SELECT * FROM "
+                    + "(SELECT "
+                    + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + COMMA
+                    + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_MODEL + COMMA
+                    + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_NAME + COMMA
+                    + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR + COMMA
+                    + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT + COMMA
+                    + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_QUANTITY
+                    + " FROM " + PluEntry.TABLE_NAME
+                    + INNER_JOIN + ModelEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_MODEL
+                    + EQUALS + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_ID
+                    + INNER_JOIN + SizeEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_SIZE
+                    + EQUALS + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_ID
+                    + INNER_JOIN + ColorEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_COLOR
+                    + EQUALS + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR_ID
+                    + INNER_JOIN + LogPluCostEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID
+                    + EQUALS + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_ID_PLU
+                    + INNER_JOIN + ObjectEntry.TABLE_NAME
+                    + ON + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_OBJECT_ID
+                    + EQUALS + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_ID
+                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + EQUALS  + "? )"
+                    + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + "?;";
 
 
     /**
