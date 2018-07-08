@@ -75,12 +75,13 @@ public class Product {
     }
 
     /**
-     * Removes first zeros from the string.
-     * @param barcode String from which need to remove leading zeros.
-     * @return String with removed leading zeros.
+     * Removes leading zeros and last character(check sum number) from the string.
+     * @param barcode String from which need to get PLU.
+     * @return String PLU.
      */
-    private String removeLeadingZeros(String barcode) {
+    public static String getPluFromBarcode(String barcode) {
         // ^ anchors to the start of the string. The 0* means zero or more 0 characters.
-        return barcode.replaceFirst("^0*", "");
+        barcode = barcode.replaceFirst("^0*", "");
+        return barcode.substring(0, barcode.length() - 1);
     }
 }

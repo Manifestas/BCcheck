@@ -1,6 +1,5 @@
 package dev.manifest.bccheck.data;
 
-import com.sun.istack.internal.NotNull;
 import dev.manifest.bccheck.table.Product;
 import dev.manifest.bccheck.data.DbContract.ModelEntry;
 import dev.manifest.bccheck.data.DbContract.ColorEntry;
@@ -94,7 +93,7 @@ public class DbHelper {
      * @param barcode of product.
      * @return A Product with this barcode, if quantity of any of its sizes is zero.
      */
-    public static Product returnProductIfNew(@NotNull String barcode) {
+    public static Product returnProductIfNew(String barcode) {
         Product product = null;
         try {
             if (connection == null) {
