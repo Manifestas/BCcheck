@@ -5,7 +5,7 @@ import dev.manifest.bccheck.data.DbContract.ModelEntry;
 import dev.manifest.bccheck.data.DbContract.ColorEntry;
 import dev.manifest.bccheck.data.DbContract.SizeEntry;
 import dev.manifest.bccheck.data.DbContract.LogPluCostEntry;
-import dev.manifest.bccheck.data.DbContract.BarcodeEntry;
+import dev.manifest.bccheck.data.DbContract.PluEntry;
 import dev.manifest.bccheck.util.Prefs;
 
 import java.sql.*;
@@ -61,13 +61,13 @@ public class DbHelper {
         dbConnect();
     }
 
-    private static ResultSet getResultSet(String barcode) throws SQLException {
+    private static ResultSet getResultSet(String pluId) throws SQLException {
         if (statement == null) {
             // using PreparedStatement instead Statement reduces execution time.
-            statement = connection.prepareStatement(DbContract.queryBarcodeQty);
+            statement = connection.prepareStatement(DbContract.queryPluQty);
         }
         // replace first question mark placeholder with second argument String.
-        statement.setString(1, barcode);
+        statement.setString(1, pluId);
         String object = Prefs.getObject();
         statement.setString(2, object);
 
@@ -87,13 +87,15 @@ public class DbHelper {
     }
 
     /**
-     * Returns the product received from the database with this barcode,
-     * if there are no any sizes of this article on the residuals
+     * Returns the product received from the database with this pluID,
+     * if there are no any sizes of this article on the residuals.
+     * We can't use barcode search, because there is no barcode in database for absolute new product
+     * while invoice won't be closed.
      *
-     * @param barcode of product.
-     * @return A Product with this barcode, if quantity of any of its sizes is zero.
+     * @param pluId of product.
+     * @return A Product with this pluID, if quantity of any of its sizes is zero.
      */
-    public static Product returnProductIfNew(String barcode) {
+    public static Product returnProductIfNew(String pluId) {
         Product product = null;
         try {
             if (connection == null) {
@@ -101,13 +103,12 @@ public class DbHelper {
 
                 dbConnect();
             }
-            try (ResultSet rs = getResultSet(barcode)) {
+            try (ResultSet rs = getResultSet(pluId)) {
                 if (rs == null) {
                     log.finest("ResultSet == null");
 
                     return null;
                 }
-                // TODO: if model absolutly new resultset is empty
                 // check each size
                 while (rs.next()) {
                     //if the quantity of goods with this size is greater than zero
@@ -117,7 +118,7 @@ public class DbHelper {
                         return null;
                     }
                     //if barcode matches argument...
-                    if (rs.getString(BarcodeEntry.COLUMN_BARCODE).equals(barcode)) {
+                    if (rs.getString(PluEntry.COLUMN_ID).equals(pluId)) {
                         // ... remember it in product
                         product = getProductFromResultSet(rs);
                     }

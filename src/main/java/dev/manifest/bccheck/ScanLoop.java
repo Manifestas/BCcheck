@@ -1,6 +1,7 @@
 package dev.manifest.bccheck;
 
 import dev.manifest.bccheck.data.DbHelper;
+import dev.manifest.bccheck.table.Product;
 import dev.manifest.bccheck.table.TableModel;
 import org.jnativehook.GlobalScreen;
 import rx.Observable;
@@ -42,6 +43,7 @@ public class ScanLoop {
                     int index = s.lastIndexOf("Enter");
                     return s.substring(index - 12, index); // 000004622369
                 })
+                .map(Product::getPluFromBarcode)    // 462236
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
                 .filter(p -> !TableModel.getInstance().containsArticle(p))
