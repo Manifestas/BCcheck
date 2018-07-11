@@ -118,7 +118,10 @@ public final class DbContract {
                     + INNER_JOIN + ObjectEntry.TABLE_NAME
                     + ON + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_OBJECT_ID
                     + EQUALS + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_ID
-                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + EQUALS  + "? )"
+                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_MODEL + EQUALS
+                    + " (SELECT " + PluEntry.COLUMN_ID_MODEL
+                    + " FROM " + PluEntry.TABLE_NAME
+                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + EQUALS  + "? ))"
                     + " AS results WHERE " + ObjectEntry.COLUMN_OBJECT + EQUALS + "?;";
 
 
