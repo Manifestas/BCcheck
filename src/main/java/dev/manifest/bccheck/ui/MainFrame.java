@@ -25,6 +25,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
 
+        setTitle("BCcheck");
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         initTextArea();
         initTable();
