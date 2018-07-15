@@ -106,4 +106,12 @@ public class TableModel extends AbstractTableModel {
 
         log.info("Adding " + product + " to TableModel");
     }
+
+    /**
+     * Removes all data from the model.
+     */
+    public synchronized void clearData() {
+        productList.clear();
+        fireTableDataChanged();
+    }
 }

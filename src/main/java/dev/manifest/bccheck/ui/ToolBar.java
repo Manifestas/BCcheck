@@ -1,5 +1,7 @@
 package dev.manifest.bccheck.ui;
 
+import dev.manifest.bccheck.table.TableModel;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,8 +20,21 @@ public class ToolBar extends JToolBar {
     }
 
     private void initButtons() {
+        ImageIcon clearDataIcon = createImageIcon("/image/icon_erase.png");
+        JButton clearDataButton = new JButton(clearDataIcon);
+        clearDataButton.setFocusable(false);
+        clearDataButton.setToolTipText("Clear Data");
+        clearDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TableModel.getInstance().clearData();
+            }
+        });
+        add(clearDataButton);
+
         ImageIcon settingsIcon = createImageIcon("/image/icon_settings.png");
         JButton settingsButton = new JButton(settingsIcon);
+        settingsButton.setFocusable(false);
         settingsButton.setToolTipText("Open Settings");
         settingsButton.addActionListener(new ActionListener() {
             @Override
@@ -27,8 +42,8 @@ public class ToolBar extends JToolBar {
                 new SettingsDialog();
             }
         });
-
         add(settingsButton);
+
     }
 
     /** Returns an ImageIcon, or null if the path was invalid. */
