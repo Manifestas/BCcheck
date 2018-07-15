@@ -6,6 +6,7 @@ import dev.manifest.bccheck.data.DbContract.ColorEntry;
 import dev.manifest.bccheck.data.DbContract.SizeEntry;
 import dev.manifest.bccheck.data.DbContract.LogPluCostEntry;
 import dev.manifest.bccheck.data.DbContract.PluEntry;
+import dev.manifest.bccheck.data.DbContract.ObjectEntry;
 import dev.manifest.bccheck.util.Prefs;
 
 import java.sql.*;
@@ -68,8 +69,6 @@ public class DbHelper {
         }
         // replace first question mark placeholder with second argument String.
         statement.setString(1, pluId);
-        String object = Prefs.getObject();
-        statement.setString(2, object);
 
         return statement.executeQuery();
     }
@@ -90,7 +89,9 @@ public class DbHelper {
      * Returns the product received from the database with this pluID,
      * if there are no any sizes of this article on the residuals.
      * We can't use barcode search, because there is no barcode in database for absolute new product
-     * while invoice won't be closed.
+     * while invoice won't be closed. And we can't specify the object immediately in the query,
+     * because if the product hasn't been in your object yet the quantity won't be displayed (even zero)
+     * and the query returns null.
      *
      * @param pluId of product.
      * @return A Product with this pluID, if quantity of any of its sizes is zero.
@@ -109,16 +110,18 @@ public class DbHelper {
 
                     return null;
                 }
-                // check each size
+                String userObjectID = Prefs.getObject();
+                // check each size and each object
                 while (rs.next()) {
-                    //if the quantity of goods with this size is greater than zero
-                    if (rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
+                    boolean objectIsTheSame = rs.getString(ObjectEntry.COLUMN_OBJECT).equals(userObjectID);
+                    //if this is the same object as ours and the quantity of goods with this size is greater than zero
+                    if (objectIsTheSame && rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
                         log.info("Quantity with this size > 0");
                         //immediately go out with null
                         return null;
                     }
-                    //if barcode matches argument...
-                    if (rs.getString(PluEntry.COLUMN_ID).equals(pluId)) {
+                    //if we haven't found our product and  ID_PLU matches argument...
+                    if (product == null && rs.getString(PluEntry.COLUMN_ID).equals(pluId)) {
                         // ... remember it in product
                         product = getProductFromResultSet(rs);
                     }
@@ -131,9 +134,7 @@ public class DbHelper {
             // close all
             dispose();
         }
-
         log.finest("Returning a new product: " + product);
-
         return product;
     }
 }
