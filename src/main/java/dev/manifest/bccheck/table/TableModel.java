@@ -28,7 +28,7 @@ public class TableModel extends AbstractTableModel {
     /** value of the "quantity" column for easy import to TradeX. */
     private static final int LAST_COLUMN_VALUE = 1;
     // for easy exporting to TradeX
-    private final String[] columnNames = {"Модель", "Цвет", "Размер", "Кол-во"};
+    private final String[] columnNames = {"Модель", "Цвет", "Размер", "Количество"};
 
     /** List for storing table records. */
     private List<Product> productList = new ArrayList<>();
