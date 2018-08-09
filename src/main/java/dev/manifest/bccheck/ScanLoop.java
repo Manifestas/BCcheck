@@ -16,8 +16,11 @@ import java.io.PipedOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class ScanLoop {
+
+    private static final Logger log = Logger.getLogger(ScanLoop.class.getName());
 
     private static InputStream prepareStream() {
         PipedOutputStream outputStream = new PipedOutputStream();
@@ -37,10 +40,15 @@ public class ScanLoop {
         Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
         stringObservable.
                 debounce(80, TimeUnit.MILLISECONDS)
+                .map(s -> {
+                    log.finest("String after \"debounce\": " + s);
+                    return s;
+                })
                 .filter(s -> s.length() >= 17)
                 .filter(s -> s.matches("([0-9]{12}+)Enter")) // 000004622369Enter
                 .map(s -> {
                     int index = s.lastIndexOf("Enter");
+                    log.finest("String on \"Enter\" check :" + s);
                     return s.substring(index - 12, index); // 000004622369
                 })
                 .map(Product::getPluFromBarcode)    // 462236
