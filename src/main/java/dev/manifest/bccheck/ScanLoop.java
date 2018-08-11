@@ -46,10 +46,16 @@ public class ScanLoop {
                 })
                 .filter(s -> s.length() >= 17)
                 .filter(s -> s.matches("([0-9]{12}+)Enter")) // 000004622369Enter
+                .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
+                // 000004622369Enter000004622369Enter to 000004622369, 000004622369
+//                .map(s -> {
+//                    int index = s.lastIndexOf("Enter");
+//                    log.finest("String on \"Enter\" check :" + s);
+//                    return s.substring(index - 12, index); // 000004622369
+//                })
                 .map(s -> {
-                    int index = s.lastIndexOf("Enter");
-                    log.finest("String on \"Enter\" check :" + s);
-                    return s.substring(index - 12, index); // 000004622369
+                    log.finest("String after \"split\": " + s);
+                    return s;
                 })
                 .map(Product::getPluFromBarcode)    // 462236
                 .map(DbHelper::returnProductIfNew)
@@ -63,4 +69,5 @@ public class ScanLoop {
     public static void start() {
         run(prepareStream());
     }
+
 }
