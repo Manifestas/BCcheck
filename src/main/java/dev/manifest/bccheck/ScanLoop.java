@@ -44,14 +44,15 @@ public class ScanLoop {
                     log.finest("String after \"debounce\": " + s);
                     return s;
                 })
-                .filter(s -> s.length() >= 17)
-                .filter(s -> s.matches("([0-9]{12}+)Enter.*")) // 000004622369Enter*
+                .filter(s -> s.length() >= 12) // remove short single clicks
+                .filter(s -> s.matches("(.*[0-9]{7}+)Enter.*")) // *4622369Enter*
                 .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
                 // 000004622369Enter000004622369Enter to 000004622369, 000004622369
                 .map(s -> {
                     log.finest("String after \"split\": " + s);
                     return s;
                 })
+                .filter(s -> s.length() >= 7 && s.matches("[0-9]{7}.*")) // if we still can get pluId
                 .map(Product::getPluFromBarcode)    // 462236
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
