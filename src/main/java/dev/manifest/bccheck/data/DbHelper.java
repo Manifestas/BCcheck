@@ -116,7 +116,7 @@ public class DbHelper {
                     boolean objectIsTheSame = rs.getString(ObjectEntry.COLUMN_OBJECT).equals(userObjectID);
                     //if this is the same object as ours and the quantity of goods with this size is greater than zero
                     if (objectIsTheSame && rs.getInt(LogPluCostEntry.COLUMN_QUANTITY) > 0) {
-                        log.info("idPlu = " + pluId + " - Quantity with this size > 0");
+                        log.info(rs.getString(ModelEntry.COLUMN_MODEL) + " > 0");
                         //immediately go out with null
                         return null;
                     }
