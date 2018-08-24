@@ -39,7 +39,7 @@ public class ScanLoop {
         Observable<byte[]> byteObservable = StringObservable.from(input);
         Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
         stringObservable.
-                debounce(300, TimeUnit.MILLISECONDS)
+                debounce(500, TimeUnit.MILLISECONDS)
                 .map(s -> {
                     log.finest("String after \"debounce\": " + s);
                     return s;
