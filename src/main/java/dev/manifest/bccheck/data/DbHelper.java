@@ -37,6 +37,7 @@ public class DbHelper {
     private static void closeConnection() throws SQLException {
         if (connection != null) {
             connection.close();
+            connection = null;
             log.finest("Closing connection");
         }
     }
@@ -44,6 +45,7 @@ public class DbHelper {
     private static void closeStatement() throws SQLException {
         if (statement != null) {
             statement.close();
+            statement = null;
             log.finest("Closing statement");
         }
     }
