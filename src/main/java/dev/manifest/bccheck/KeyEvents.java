@@ -55,4 +55,12 @@ public class KeyEvents {
         });
         return keyObservable;
     }
+
+    public static String getStringFromList(List<String> stringList) {
+        StringBuilder builder = new StringBuilder();
+        for (String s : stringList) {
+            builder.append(s);
+        }
+        return builder.toString();
+    }
 }
