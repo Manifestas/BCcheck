@@ -44,33 +44,6 @@ public class ScanLoop {
                 .subscribe(n -> TableModel.getInstance().addProduct(n),
                            e -> log.log(Level.WARNING, e.toString()));
     }
-/*
-        Observable<byte[]> byteObservable = StringObservable.from(input);
-        Observable<String> stringObservable = StringObservable.decode(byteObservable, StandardCharsets.UTF_8);
-        stringObservable.
-                debounce(800, TimeUnit.MILLISECONDS)
-                .map(s -> {
-                    log.finest("String after \"debounce\": " + s);
-                    return s;
-                })
-                .filter(s -> s.length() >= 12) // remove short single clicks
-                .filter(s -> s.matches("(.*[0-9]{7}+)Enter.*")) // *4622369Enter*
-                .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
-                // 000004622369Enter000004622369Enter to 000004622369, 000004622369
-                .map(s -> {
-                    log.finest("String after \"split\": " + s);
-                    return s;
-                })
-                .filter(s -> s.length() >= 7 && s.matches("[0-9]{7}.*")) // if we still can get pluId
-                .map(Product::getPluFromBarcode)    // 462236
-                .map(DbHelper::returnProductIfNew)
-                .filter(Objects::nonNull)
-                .filter(p -> !TableModel.getInstance().containsArticle(p))
-                .subscribeOn(Schedulers.io())
-                .observeOn(SwingScheduler.getInstance())
-                .subscribe(TableModel.getInstance()::addProduct);
-    }
-    */
 
     public static void start() {
         run();
