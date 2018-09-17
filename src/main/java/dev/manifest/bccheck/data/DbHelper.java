@@ -20,7 +20,7 @@ public class DbHelper {
     private static Connection connection;
     private static PreparedStatement statement;
 
-    private static void dbConnect() {
+    public static void dbConnect() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbUrl = String.format(DbContract.DB_CONN_URL, Prefs.getIp(), Prefs.getPort(), Prefs.getLogin(), Prefs.getPassword());

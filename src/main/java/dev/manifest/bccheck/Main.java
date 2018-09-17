@@ -1,5 +1,6 @@
 package dev.manifest.bccheck;
 
+import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.ui.MainFrame;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -40,6 +41,8 @@ public class Main {
         // Don't forget to disable the parent handlers.
         logger.setUseParentHandlers(false);
 
+        // Connect to the Database for quick access
+        DbHelper.dbConnect();
 
         EventQueue.invokeLater(() -> {
             MainFrame mainFrame = new MainFrame();
