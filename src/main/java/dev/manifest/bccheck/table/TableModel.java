@@ -87,6 +87,7 @@ public class TableModel extends AbstractTableModel {
         }
         for (Product p : productList) {
             if (p.articleEquals(product)) {
+                log.info(product + "already exist in the table.");
                 return true;
             }
         }
