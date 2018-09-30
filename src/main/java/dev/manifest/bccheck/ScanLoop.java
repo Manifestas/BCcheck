@@ -8,6 +8,7 @@ import rx.schedulers.Schedulers;
 import rx.schedulers.SwingScheduler;
 
 import java.util.Objects;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +40,7 @@ public class ScanLoop {
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
                 .filter(p -> !TableModel.getInstance().containsArticle(p))
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
                 .observeOn(SwingScheduler.getInstance())
                 .subscribe(n -> TableModel.getInstance().addProduct(n),
                            e -> log.log(Level.WARNING, e.toString()));
