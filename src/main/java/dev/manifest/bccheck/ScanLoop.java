@@ -29,7 +29,7 @@ public class ScanLoop {
                 })
                 .filter(s -> s.length() >= 7 && s.matches("[0-9]{7}.*")) // remove garbage
                 /*
-                sometimes "Enter" at the end of barcode won't appear, so i change this
+                sometimes "Enter" at the end of barcode does not appear, so i change this
                 .filter(s -> s.matches("(.*[0-9]{7}+)Enter.*")) // *4622369Enter*
                 */
                 .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
