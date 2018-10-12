@@ -7,6 +7,7 @@ import dev.manifest.bccheck.data.DbContract.SizeEntry;
 import dev.manifest.bccheck.data.DbContract.LogPluCostEntry;
 import dev.manifest.bccheck.data.DbContract.PluEntry;
 import dev.manifest.bccheck.data.DbContract.ObjectEntry;
+import dev.manifest.bccheck.util.MidiPlayer;
 import dev.manifest.bccheck.util.Prefs;
 
 import java.sql.*;
@@ -109,6 +110,7 @@ public class DbHelper {
             try (ResultSet rs = getResultSet(pluId)) {
                 if (rs == null) {
                     log.finest("ResultSet == null");
+                    MidiPlayer.playAlarmSound();
 
                     return null;
                 }
