@@ -137,6 +137,7 @@ public class DbHelper {
             }
             // close all
             dispose();
+            MidiPlayer.playAlarmSound();
         }
         log.finest("Returning a new product: " + product);
         return product;
