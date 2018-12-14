@@ -2,6 +2,7 @@ package dev.manifest.bccheck.ui;
 
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.util.Prefs;
+import dev.manifest.bccheck.util.PrefsValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,21 +134,21 @@ public class SettingsDialog extends JDialog {
         // replacing commas with dots, if russian language was enabled while typing on numkeys.
         ip = ip.replace(',', '.');
         tfIP.setText(ip);
-        if (!Prefs.isIPV4(ip)) {
+        if (!PrefsValidator.isIPV4(ip)) {
             JOptionPane.showMessageDialog(this, "IP address is not valid!",
                     alertDialogTitle, JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         String port = tfPort.getText();
-        if (!Prefs.isPortValid(port)) {
+        if (!PrefsValidator.isPortValid(port)) {
             JOptionPane.showMessageDialog(this, "Port is not valid!",
                     alertDialogTitle, JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         String object = tfObject.getText();
-        if (!Prefs.isObjectValid(object)) {
+        if (!PrefsValidator.isObjectValid(object)) {
             JOptionPane.showMessageDialog(this, "Object is not valid!",
                     alertDialogTitle, JOptionPane.ERROR_MESSAGE);
             return false;
