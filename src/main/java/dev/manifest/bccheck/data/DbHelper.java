@@ -140,6 +140,11 @@ public class DbHelper {
             MidiPlayer.playAlarmSound();
         }
         log.finest("Returning a new product: " + product);
+
+        //happens if resultSet is empty
+        if (product == null) {
+            MidiPlayer.playAlarmSound();
+        }
         return product;
     }
 }
