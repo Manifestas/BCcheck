@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class ScanLoop {
 
-    public static int MAX_INTERVAL_BETWEEN_EVENTS = 200;
+    private static final int MAX_INTERVAL_BETWEEN_EVENTS = 200;
 
     private static final Logger log = Logger.getLogger(ScanLoop.class.getName());
 
@@ -28,10 +28,6 @@ public class ScanLoop {
                     return s;
                 })
                 .filter(s -> s.length() >= 7 && s.matches("[0-9]{7}.*")) // remove garbage
-                /*
-                sometimes "Enter" at the end of barcode does not appear, so i change this
-                .filter(s -> s.matches("(.*[0-9]{7}+)Enter.*")) // *4622369Enter*
-                */
                 .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
                 // 000004622369Enter000004622369Enter to 000004622369, 000004622369
                 .map(s -> {
@@ -51,5 +47,4 @@ public class ScanLoop {
     public static void start() {
         run();
     }
-
 }
