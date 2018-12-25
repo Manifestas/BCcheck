@@ -103,6 +103,9 @@ public class TableModel extends AbstractTableModel {
      * @param product that needs to be added.
      */
     public synchronized void addProduct(Product product) {
+        if (product == null) {
+            return;
+        }
         // Play MIDI sound.
         MidiPlayer.playNewProduct();
         productList.add(product);
