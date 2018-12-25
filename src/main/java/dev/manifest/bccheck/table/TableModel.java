@@ -57,7 +57,11 @@ public class TableModel extends AbstractTableModel {
     @Override
     public synchronized Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex == 0) {
-            return columnNames[columnIndex];
+            if (columnIndex >= 0 && columnIndex < columnNames.length) {
+                return columnNames[columnIndex];
+            } else {
+                throw new IndexOutOfBoundsException("Column index value must be in 0-" + (COLUMN_COUNT - 1) + " range.");
+            }
         } else {
             Product product = productList.get(rowIndex - 1); // minus columnNames row.
             switch (columnIndex) {
