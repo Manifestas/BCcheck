@@ -3,6 +3,7 @@ package dev.manifest.bccheck;
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.table.Product;
 import dev.manifest.bccheck.table.TableModel;
+import dev.manifest.bccheck.util.StringUtils;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.schedulers.SwingScheduler;
@@ -22,7 +23,7 @@ public class ScanLoop {
     private static void run() {
         Observable<String> keyObservable = KeyEvents.getKeyObservable();
         keyObservable.buffer(keyObservable.debounce(MAX_INTERVAL_BETWEEN_EVENTS, TimeUnit.MILLISECONDS))
-                .map(KeyEvents::getStringFromList)
+                .map(StringUtils::getStringFromList)
                 .map(s -> {
                     log.finest("String after \"debounce\": " + s);
                     return s;
