@@ -2,7 +2,8 @@ package dev.manifest.bccheck.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PrefsValidatorTest {
 
@@ -45,5 +46,63 @@ public class PrefsValidatorTest {
         assertTrue("IP 255.255.255.255 should be valid", PrefsValidator.isIPV4("255.255.255.255"));
     }
 
+    @Test
+    public void isPortValidNotNumber() {
+        assertFalse(PrefsValidator.isPortValid("zero"));
+    }
 
+    @Test
+    public void isPortValidEmpty() {
+        assertFalse(PrefsValidator.isPortValid(""));
+    }
+
+    @Test
+    public void isPortValidZero() {
+        assertFalse(PrefsValidator.isPortValid("0"));
+    }
+
+    @Test
+    public void isPortValidNegative() {
+        assertFalse(PrefsValidator.isPortValid("-100"));
+    }
+
+    @Test
+    public void isPortValidTooBig() {
+        assertFalse(PrefsValidator.isPortValid("65536"));
+    }
+
+    @Test
+    public void isPortValidValidNumber() {
+        assertTrue(PrefsValidator.isPortValid("8080"));
+    }
+
+    @Test
+    public void isObjectValidNotNumber() {
+        assertFalse(PrefsValidator.isObjectValid("zero"));
+    }
+
+    @Test
+    public void isObjectValidEmpty() {
+        assertFalse(PrefsValidator.isObjectValid(""));
+    }
+
+    @Test
+    public void isObjectValidZero() {
+        assertTrue(PrefsValidator.isObjectValid("0"));
+    }
+
+    @Test
+    public void isObjectValidNegative() {
+        assertFalse(PrefsValidator.isObjectValid("-100"));
+    }
+
+    @Test
+    public void isObjectValidTooBig() {
+        assertFalse(PrefsValidator.isObjectValid("100000"));
+    }
+
+    @Test
+    public void isObjectValidValidNumber() {
+        assertTrue(PrefsValidator.isObjectValid("119"));
+    }
 }
