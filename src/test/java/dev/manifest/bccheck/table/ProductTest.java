@@ -45,4 +45,33 @@ public class ProductTest {
         String expected = "a0123400005";
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void articleEqualsSameProductAnotherSize() {
+        Product product1 = new Product("foo", "bar", "39");
+        Product product2 = new Product("foo", "bar", "38");
+        assertTrue(product1.articleEquals(product2));
+    }
+
+    @Test
+    public void articleEqualsProductIsNull() {
+        Product product1 = new Product("foo", "bar", "39");
+        Product product2 = null;
+        assertFalse(product1.articleEquals(product2));
+    }
+
+    @Test
+    public void articleEqualsProductsDifferent() {
+        Product product1 = new Product("foo", "bar", "39");
+        Product product2 = new Product("bar", "foo", "39");
+        assertFalse(product1.articleEquals(product2));
+    }
+
+    @Test
+    public void articleEqualsProductsEquals() {
+        Product product1 = new Product("foo", "bar", "39");
+        Product product2 = new Product("foo", "bar", "39");
+        assertTrue(product1.articleEquals(product2));
+    }
+
 }
