@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class TableModelTest {
 
@@ -122,9 +123,23 @@ public class TableModelTest {
     }
 
     @Test
+    public void addProductFireTableDataChangedInvoked() {
+        TableModel model = spy(tableModel);
+        model.addProduct(bar);
+        verify(model).fireTableDataChanged();
+    }
+
+    @Test
     public void clearDataRowCountReturn1() {
         tableModel.clearData();
         assertEquals(1, tableModel.getRowCount());
+    }
+
+    @Test
+    public void clearDataiFireTableDataChangedInvoked() {
+        TableModel model = spy(tableModel);
+        model.clearData();
+        verify(model).fireTableDataChanged();
     }
 
     private void fillProductList() {
