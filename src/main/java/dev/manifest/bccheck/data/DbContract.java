@@ -421,4 +421,29 @@ public final class DbContract {
          */
         public static final String COLUMN_QUANTITY = "StockQty";
     }
+
+    /**
+     * Inner class that defines constant values for the serialNumber database table.
+     */
+    public static final class PLUSerialEntry {
+
+        /**
+         * Name of database table for serialNumbers
+         */
+        public static final String TABLE_NAME = "T_PLUSerial";
+
+        /**
+         * Serial number.
+         *
+         * Type: VARCHAR
+         */
+        public static final String COLUMN_SERIALNUMBER = "SerialNumber";
+
+        /**
+         * Internal code of the article (unique for sizes).
+         *
+         * Type: INT
+         */
+        public static final String COLUMN_ID_PLU = "ID_PLU";
+    }
 }
