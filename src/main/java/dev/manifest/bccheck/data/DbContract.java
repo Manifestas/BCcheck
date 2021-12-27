@@ -122,6 +122,40 @@ public final class DbContract {
                 + " FROM " + PluEntry.TABLE_NAME
                 + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + EQUALS  + "? )";
 
+    /**
+     * Query from TradeX table for getting Goods quantity passing serial number.
+     */
+    public static final String querySerialNumberQty =
+            "SELECT "
+                    + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + COMMA
+                    + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_MODEL + COMMA
+                    + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_NAME + COMMA
+                    + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR + COMMA
+                    + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT + COMMA
+                    + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_QUANTITY
+                    + " FROM " + PluEntry.TABLE_NAME
+                    + INNER_JOIN + ModelEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_MODEL
+                    + EQUALS + ModelEntry.TABLE_NAME + DOT + ModelEntry.COLUMN_ID
+                    + INNER_JOIN + SizeEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_SIZE
+                    + EQUALS + SizeEntry.TABLE_NAME + DOT + SizeEntry.COLUMN_SIZE_ID
+                    + INNER_JOIN + ColorEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_COLOR
+                    + EQUALS + ColorEntry.TABLE_NAME + DOT + ColorEntry.COLUMN_COLOR_ID
+                    + INNER_JOIN + LogPluCostEntry.TABLE_NAME
+                    + ON + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID
+                    + EQUALS + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_ID_PLU
+                    + INNER_JOIN + ObjectEntry.TABLE_NAME
+                    + ON + LogPluCostEntry.TABLE_NAME + DOT + LogPluCostEntry.COLUMN_OBJECT_ID
+                    + EQUALS + ObjectEntry.TABLE_NAME + DOT + ObjectEntry.COLUMN_OBJECT_ID
+                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID_MODEL + EQUALS
+                    + " (SELECT " + PluEntry.COLUMN_ID_MODEL
+                    + " FROM " + PluEntry.TABLE_NAME
+                    + " WHERE " + PluEntry.TABLE_NAME + DOT + PluEntry.COLUMN_ID + EQUALS
+                    + " (SELECT " + PLUSerialEntry.COLUMN_ID_PLU + " FROM " + PLUSerialEntry.TABLE_NAME
+                    + " WHERE " + PLUSerialEntry.COLUMN_SERIALNUMBER +  EQUALS + "? ))";
+
 
     /**
      * Inner class that defines constant values for the barcode database table.
