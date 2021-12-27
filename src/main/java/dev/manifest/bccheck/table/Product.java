@@ -84,4 +84,29 @@ public class Product {
         barcode = barcode.replaceFirst("^0*", "");
         return barcode.substring(0, barcode.length() - 1);
     }
+
+    /**
+     *  Check if scanned code is similar to serial number.
+     * @param scannable scanned code.
+     * @return true if scannable is a serial number
+     */
+    public static boolean isItSerialNumber(String scannable) {
+        return scannable.length() >= 39; //minimum length 39 characters
+    }
+
+    /**
+     * AI 01 – 2
+     * Product code – 14
+     * AI 21 – 2
+     * Serial number – 13+1
+     * AI 91 – 2
+     * Security code id -  4+1
+     * AI 92 – 2
+     * Security code – 88
+     * @param dataMatrixCode scanned code
+     * @return Serial number
+     */
+    public static String getSerialFromDataMatrixCode(String dataMatrixCode) {
+        return dataMatrixCode.substring(18, 30);
+    }
 }

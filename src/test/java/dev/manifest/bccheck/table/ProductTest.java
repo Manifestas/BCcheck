@@ -74,4 +74,18 @@ public class ProductTest {
         assertTrue(product1.articleEquals(product2));
     }
 
+    @Test
+    public void isItSerialNumberIsSerial() {
+        String scannable = "010406047769798721QkmvHY.+O5crD<GS>918" +
+                "093<GS>92Za6ZlkdG3zynfnllYpMQSrbZ7Gu+OKqJ9fCRZu" +
+                "+X5A7V7D7Th7ROcrRPbmLHpqV2BLI0YWuUTPYKadnk40Zjqw==";
+        assertTrue(Product.isItSerialNumber(scannable));
+    }
+
+    @Test
+    public void isItSerialNumberIsBarcode() {
+        String scannable = "00000987234";
+        assertFalse(Product.isItSerialNumber(scannable));
+    }
+
 }

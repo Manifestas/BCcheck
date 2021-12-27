@@ -19,7 +19,6 @@ public class DbHelper {
     private final static Logger log = Logger.getLogger(DbHelper.class.getName());
 
     private static Connection connection;
-    private static PreparedStatement statement;
 
     public static void dbConnect() {
         try {
@@ -43,17 +42,8 @@ public class DbHelper {
         }
     }
 
-    private static void closeStatement() throws SQLException {
-        if (statement != null) {
-            statement.close();
-            statement = null;
-            log.finest("Closing statement");
-        }
-    }
-
     public static void dispose() {
         try {
-            closeStatement();
             closeConnection();
         } catch (SQLException e) {
             log.log(Level.WARNING, "Exception while disposing DB: ", e.getMessage());
@@ -65,15 +55,15 @@ public class DbHelper {
         dbConnect();
     }
 
-    private static ResultSet getResultSet(String pluId) throws SQLException {
-        if (statement == null) {
-            // using PreparedStatement instead Statement reduces execution time.
-            statement = connection.prepareStatement(DbContract.queryPluQty);
+    private static ResultSet getResultSet(String scannable) throws SQLException {
+        Statement statement = connection.createStatement();
+        if (Product.isItSerialNumber(scannable)) {
+            String serial = Product.getSerialFromDataMatrixCode(scannable);
+            return statement.executeQuery(DbContract.querySerialNumberQty(serial));
+        } else {
+            String barcode = Product.getPluFromBarcode(scannable);
+            return statement.executeQuery(DbContract.queryPluQty(barcode));
         }
-        // replace first question mark placeholder with second argument String.
-        statement.setString(1, pluId);
-
-        return statement.executeQuery();
     }
 
     private static Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
