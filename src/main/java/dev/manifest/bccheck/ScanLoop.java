@@ -29,8 +29,8 @@ public class ScanLoop {
                     return s;
                 })
                 .filter(s -> s.length() >= 7) // remove garbage
-                .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
-                // 000004622369Enter000004622369Enter to 000004622369, 000004622369
+                .flatMap(s -> Observable.from(s.split("\r"))) // split possible
+                // 000004622369\r000004622369\r to 000004622369, 000004622369
                 .map(s -> {
                     log.finest("String after \"split\": " + s);
                     return s;
