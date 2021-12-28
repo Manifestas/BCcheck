@@ -28,14 +28,13 @@ public class ScanLoop {
                     log.finest("String after \"debounce\": " + s);
                     return s;
                 })
-                .filter(s -> s.length() >= 7 && s.matches("[0-9]{7}.*")) // remove garbage
+                .filter(s -> s.length() >= 7) // remove garbage
                 .flatMap(s -> Observable.from(s.split("Enter"))) // split possible
                 // 000004622369Enter000004622369Enter to 000004622369, 000004622369
                 .map(s -> {
                     log.finest("String after \"split\": " + s);
                     return s;
                 })
-                .map(Product::getPluFromBarcode)    // 462236
                 .map(DbHelper::returnProductIfNew)
                 .filter(Objects::nonNull)
                 .filter(p -> !TableModel.getInstance().containsArticle(p))

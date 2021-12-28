@@ -79,17 +79,17 @@ public class DbHelper {
     }
 
     /**
-     * Returns the product received from the database with this pluID,
+     * Returns the product received from the database with this scanned code,
      * if there are no any sizes of this article on the residuals.
      * We can't use barcode search, because there is no barcode in database for absolute new product
      * while invoice won't be closed. And we can't specify the object immediately in the query,
      * because if the product hasn't been in your object yet the quantity won't be displayed (even zero)
      * and the query returns null.
      *
-     * @param pluId of product.
+     * @param scannedCode of product.
      * @return A Product with this pluID, if quantity of any of its sizes is zero.
      */
-    public static Product returnProductIfNew(String pluId) {
+    public static Product returnProductIfNew(String scannedCode) {
         Product product = null;
         try {
             if (connection == null) {
@@ -97,7 +97,7 @@ public class DbHelper {
 
                 dbConnect();
             }
-            try (ResultSet rs = getResultSet(pluId)) {
+            try (ResultSet rs = getResultSet(scannedCode)) {
                 if (rs == null) {
                     log.finest("ResultSet == null");
                     MidiPlayer.playAlarmSound();
@@ -114,9 +114,7 @@ public class DbHelper {
                         //immediately go out with null
                         return null;
                     }
-                    //if we haven't found our product and  ID_PLU matches argument...
-                    if (product == null && rs.getString(PluEntry.COLUMN_ID).equals(pluId)) {
-                        // ... remember it in product
+                    if (product == null) {
                         product = getProductFromResultSet(rs);
                     }
                 }
