@@ -2,8 +2,8 @@ package dev.manifest.bccheck;
 
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.ui.MainFrame;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
 
 import javax.swing.*;
 import java.awt.*;

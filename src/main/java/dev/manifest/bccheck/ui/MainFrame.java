@@ -3,8 +3,8 @@ package dev.manifest.bccheck.ui;
 import dev.manifest.bccheck.WindowHandler;
 import dev.manifest.bccheck.data.DbHelper;
 import dev.manifest.bccheck.table.Table;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
