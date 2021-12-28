@@ -16,7 +16,7 @@ public final class DbContract {
     /**
      * Default user password.
      */
-    public static final String DB_PASSWORD = "12345678";
+    public static final String DB_PASSWORD = "3632818";
     /**
      * Default DB IP address.
      */
