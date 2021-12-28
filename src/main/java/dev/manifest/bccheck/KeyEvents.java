@@ -8,8 +8,6 @@ import rx.Subscriber;
 import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
-import java.util.List;
-
 
 public class KeyEvents {
     public static Observable<String> getKeyObservable() {
@@ -25,6 +23,8 @@ public class KeyEvents {
                      */
                     @Override
                     public void nativeKeyTyped(NativeKeyEvent nativeKeyEvent) {
+                        String keyString = String.valueOf(nativeKeyEvent.getKeyChar());
+                        subscriber.onNext(keyString);
 
                     }
 
@@ -35,8 +35,6 @@ public class KeyEvents {
                      */
                     @Override
                     public void nativeKeyPressed(NativeKeyEvent nativeKeyEvent) {
-                        String keyString = NativeKeyEvent.getKeyText(nativeKeyEvent.getKeyCode());
-                        subscriber.onNext(keyString);
                     }
 
                     @Override
