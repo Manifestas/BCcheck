@@ -107,6 +107,9 @@ public class Product {
      * @return Serial number
      */
     public static String getSerialFromDataMatrixCode(String dataMatrixCode) {
-        return dataMatrixCode.substring(18, 31);
+        String serialNumber = dataMatrixCode.substring(18, 31);
+        serialNumber = serialNumber.replace("\'", "\'\'");
+        return serialNumber;
+
     }
 }
